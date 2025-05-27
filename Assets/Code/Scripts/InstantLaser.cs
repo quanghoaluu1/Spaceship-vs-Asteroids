@@ -1,17 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InstantLaser : MonoBehaviour
+public class ColorfulLaser : MonoBehaviour
 {
-    [Header("Thiết lập laser")]
     public Transform firePoint;
     public float maxDistance = 100f;
     public LineRenderer lineRenderer;
-
-    [Header("Layer để raycast trúng")]
     public LayerMask hitLayers;
-
-    [Header("Hiệu ứng laser")]
     public float laserDuration = 0.1f;
 
     private bool isLaserActive = false;
@@ -22,19 +17,39 @@ public class InstantLaser : MonoBehaviour
         if (lineRenderer == null)
             lineRenderer = GetComponent<LineRenderer>();
 
-        // Gán material đơn giản
-        Material laserMat = new Material(Shader.Find("Unlit/Color"));
-        laserMat.color = Color.cyan;
-        lineRenderer.material = laserMat;
+        Shader shader = Shader.Find("Legacy Shaders/Particles/Additive");
+        if (shader == null)
+        {
+            Debug.LogError("Không tìm thấy shader Legacy Shaders/Particles/Additive");
+            return;
+        }
+        lineRenderer.material = new Material(shader);
 
-        lineRenderer.startWidth = 0.2f;
-        lineRenderer.endWidth = 0.2f;
+        Gradient gradient = new Gradient();
+        gradient.SetKeys(
+            new GradientColorKey[] {
+                new GradientColorKey(Color.cyan, 0f),
+                new GradientColorKey(Color.white, 0.5f),
+                new GradientColorKey(Color.magenta, 1f)
+            },
+            new GradientAlphaKey[] {
+                new GradientAlphaKey(1f, 0f),
+                new GradientAlphaKey(1f, 1f)
+            }
+        );
+        lineRenderer.colorGradient = gradient;
+
+        AnimationCurve curve = new AnimationCurve();
+        curve.AddKey(0f, 0.05f);  // nhỏ đầu
+        curve.AddKey(0.5f, 0.15f); // dày giữa
+        curve.AddKey(1f, 0.05f);   // nhỏ cuối
+        lineRenderer.widthCurve = curve;
+
         lineRenderer.enabled = false;
     }
 
     private void Update()
     {
-        // Nhấn để bắn
         if (Keyboard.current.spaceKey.wasPressedThisFrame || Mouse.current.leftButton.wasPressedThisFrame)
         {
             isLaserActive = true;
@@ -42,11 +57,9 @@ public class InstantLaser : MonoBehaviour
             lineRenderer.enabled = true;
         }
 
-        // Nếu đang hiển thị laser thì cập nhật tia
         if (isLaserActive)
         {
             UpdateLaser();
-
             laserTimer -= Time.deltaTime;
             if (laserTimer <= 0f)
             {
@@ -60,7 +73,7 @@ public class InstantLaser : MonoBehaviour
     {
         RaycastHit hit;
         Vector3 startPos = firePoint.position;
-        Vector3 direction = firePoint.up;
+        Vector3 direction = firePoint.up;  
 
         lineRenderer.positionCount = 2;
         lineRenderer.SetPosition(0, startPos);
@@ -68,6 +81,7 @@ public class InstantLaser : MonoBehaviour
         if (Physics.Raycast(startPos, direction, out hit, maxDistance, hitLayers))
         {
             lineRenderer.SetPosition(1, hit.point);
+            Debug.Log("Trúng " + hit.collider.name);
         }
         else
         {
