@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class PlayerShooting : MonoBehaviour
 {
     public GameObject bulletPrefab;
-    public GameObject firePoint;  // Đổi thành GameObject
+    public Transform firePoint;
     public float bulletSpeed = 10f;
 
     private float fireCooldown = 0.5f;
@@ -32,11 +32,10 @@ public class PlayerShooting : MonoBehaviour
             return;
         }
 
-        // Lấy vị trí từ transform của firePoint GameObject
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.transform.position, Quaternion.identity);
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         if (rb != null)
-            rb.linearVelocity = Vector2.right * bulletSpeed;
+            rb.linearVelocity = firePoint.up * bulletSpeed;
 
         Destroy(bullet, 1.75f);
     }
