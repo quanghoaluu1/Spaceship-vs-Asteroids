@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerShooting : MonoBehaviour
+public class Bullet : MonoBehaviour
 {
     public GameObject bulletPrefab;
     public Transform firePoint;
