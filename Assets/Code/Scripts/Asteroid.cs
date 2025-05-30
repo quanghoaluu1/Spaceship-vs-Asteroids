@@ -10,6 +10,8 @@ public class Asteroid : MonoBehaviour
     public float maxLifetime = 5f;
     private SpriteRenderer _spriteRenderer;
     private Rigidbody2D _rigitbody;
+    public GameObject explosionPrefab;
+  
 
     private void Awake()
     {
@@ -23,7 +25,6 @@ public class Asteroid : MonoBehaviour
 
         _spriteRenderer.transform.eulerAngles = new Vector3(0f, 0f, Random.value * 360f);
         this.transform.localScale = Vector3.one * size;
-
         _rigitbody.mass = size;
     }
 
@@ -47,19 +48,20 @@ public class Asteroid : MonoBehaviour
             //{
             //    CreateSplit();
             //    CreateSplit();
+
             //}
+            Instantiate(explosionPrefab, collision.transform.position, Quaternion.identity);
             Destroy(collision.gameObject);
             Destroy(this.gameObject);
         }
 
         if (collision.gameObject.CompareTag("Player"))
         {
+            Instantiate(explosionPrefab, collision.transform.position, Quaternion.identity);
             Debug.Log("Game Over: Player bị thiên thạch đâm!");
 
-            GameOver();
-
-            Destroy(collision.gameObject);
             Destroy(this.gameObject);
+
         }
     }
 
