@@ -12,6 +12,9 @@ public class ColorfulLaser : MonoBehaviour
     private bool isLaserActive = false;
     private float laserTimer = 0f;
 
+    public AudioClip laserSound;          
+    private AudioSource audioSource;
+
     private void Start()
     {
         if (lineRenderer == null)
@@ -46,6 +49,8 @@ public class ColorfulLaser : MonoBehaviour
         lineRenderer.widthCurve = curve;
 
         lineRenderer.enabled = false;
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -55,6 +60,11 @@ public class ColorfulLaser : MonoBehaviour
             isLaserActive = true;
             laserTimer = laserDuration;
             lineRenderer.enabled = true;
+
+            if (laserSound != null && audioSource != null)
+            {
+                audioSource.PlayOneShot(laserSound);
+            }
         }
 
         if (isLaserActive)

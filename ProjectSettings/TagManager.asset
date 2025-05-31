@@ -3,18 +3,21 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - LaserShot
+  - Asteroid
+  - Star
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Star
   - Water
   - UI
   - hitLayers
-  - 
-  - 
-  - 
+  - Asteroid
+  - LaserShot
+  - Player
   - 
   - 
   - 

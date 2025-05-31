@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerShooting : MonoBehaviour
+public class Bullet : MonoBehaviour
 {
     public GameObject bulletPrefab;
     public Transform firePoint;
@@ -10,12 +10,15 @@ public class PlayerShooting : MonoBehaviour
     private float fireCooldown = 0.5f;
     private float lastFireTime = 0f;
 
+    public AudioClip laserSound;
+    private AudioSource audioSource;
     private PlayerInputActions inputActions;
 
     private void Awake()
     {
         inputActions = new PlayerInputActions();
         inputActions.Player.Fire.performed += ctx => Fire();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void OnEnable() => inputActions.Enable();
@@ -36,7 +39,7 @@ public class PlayerShooting : MonoBehaviour
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         if (rb != null)
             rb.linearVelocity = firePoint.up * bulletSpeed;
-
+        audioSource.PlayOneShot(laserSound);
         Destroy(bullet, 1.75f);
     }
 }
