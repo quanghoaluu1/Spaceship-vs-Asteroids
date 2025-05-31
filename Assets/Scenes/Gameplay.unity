@@ -157,7 +157,7 @@ MonoBehaviour:
   trajectoryVariance: 15
   spawnRate: 2
   spawnDistance: 15
-  spawnAmount: 1
+  spawnAmount: 3
 --- !u!4 &193455848
 Transform:
   m_ObjectHideFlags: 0
@@ -364,6 +364,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 921546427}
     - target: {fileID: 1149643701097331683, guid: e76f62ef2ef8be24d95d40a8022cf5a8, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1149643701097331683, guid: e76f62ef2ef8be24d95d40a8022cf5a8, type: 3}
       propertyPath: laserSound
       value: 
       objectReference: {fileID: 8300000, guid: 4b9a0d97083a01e46b6bccb98dd00e27, type: 3}
@@ -446,6 +450,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7990571997050752753, guid: e76f62ef2ef8be24d95d40a8022cf5a8, type: 3}
       insertIndex: 2
       addedObject: {fileID: 1259344631}
+    - targetCorrespondingSourceObject: {fileID: 7990571997050752753, guid: e76f62ef2ef8be24d95d40a8022cf5a8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1259344639}
     - targetCorrespondingSourceObject: {fileID: 7990571997050752753, guid: e76f62ef2ef8be24d95d40a8022cf5a8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1259344626}
@@ -875,6 +882,26 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1259344639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1259344621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 776870bc51a1ce449bb472bcd87c62b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firePoint: {fileID: 1915502807}
+  maxDistance: 100
+  lineRenderer: {fileID: 1915502809}
+  hitLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  laserDuration: 0.1
+  laserSound: {fileID: 0}
 --- !u!1 &1336369276
 GameObject:
   m_ObjectHideFlags: 0
@@ -886,7 +913,7 @@ GameObject:
   - component: {fileID: 1336369277}
   - component: {fileID: 1336369279}
   - component: {fileID: 1336369278}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: pulse1 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -996,7 +1023,7 @@ GameObject:
   - component: {fileID: 1381262523}
   - component: {fileID: 1381262522}
   - component: {fileID: 1381262521}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: pulse1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1421,6 +1448,9 @@ MonoBehaviour:
   speed: 200
   maxLifetime: 5
   explosionPrefab: {fileID: 7415340864447548206, guid: f145a80b66a8bd542937a2879ac53f65, type: 3}
+  playerInvincibleTime: 0.5
+  spawnTime: 0
+  asteroidInvincibleTime: 0.1
 --- !u!61 &1413798407
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1731,6 +1761,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  invincibleDuration: 5
 --- !u!4 &1688867393 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7218820854595990244, guid: ca795d5df3a13424689e30abdad28f61, type: 3}
@@ -1856,13 +1887,13 @@ GameObject:
   - component: {fileID: 1915502808}
   - component: {fileID: 1915502811}
   - component: {fileID: 1915502810}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LaserShot
   m_TagString: LaserShot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1915502807
 Transform:
   m_ObjectHideFlags: 0
@@ -1872,7 +1903,7 @@ Transform:
   m_GameObject: {fileID: 1915502806}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -38, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2067,7 +2098,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 5, y: 5}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!82 &1915502811
 AudioSource:
@@ -2180,7 +2211,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1621507987560047914, guid: ca795d5df3a13424689e30abdad28f61, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 1621507987560047914, guid: ca795d5df3a13424689e30abdad28f61, type: 3}
       propertyPath: m_TagString
@@ -2204,7 +2235,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6783456671372881598, guid: ca795d5df3a13424689e30abdad28f61, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6783456671372881598, guid: ca795d5df3a13424689e30abdad28f61, type: 3}
       propertyPath: m_TagString
@@ -2263,6 +2294,9 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 7218820854595990244, guid: ca795d5df3a13424689e30abdad28f61, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 1915502807}
+    - targetCorrespondingSourceObject: {fileID: 7218820854595990244, guid: ca795d5df3a13424689e30abdad28f61, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 1381262523}
     - targetCorrespondingSourceObject: {fileID: 7218820854595990244, guid: ca795d5df3a13424689e30abdad28f61, type: 3}
       insertIndex: -1
@@ -2270,9 +2304,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7218820854595990244, guid: ca795d5df3a13424689e30abdad28f61, type: 3}
       insertIndex: -1
       addedObject: {fileID: 53979066}
-    - targetCorrespondingSourceObject: {fileID: 7218820854595990244, guid: ca795d5df3a13424689e30abdad28f61, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1915502807}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6783456671372881598, guid: ca795d5df3a13424689e30abdad28f61, type: 3}
       insertIndex: -1

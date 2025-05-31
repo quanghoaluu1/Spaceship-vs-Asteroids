@@ -99,7 +99,19 @@ public class InstantLaser : MonoBehaviour
                 Asteroid asteroid = hit.collider.GetComponent<Asteroid>();
                 if (asteroid != null)
                 {
-                    asteroid.TakeDamageFromLaser(); // Gọi hàm xử lý
+                    // Kiểm tra xem có đang miễn nhiễm không
+                    if (Time.time - asteroid.spawnTime >= asteroid.asteroidInvincibleTime)
+                    {
+                        // Gây sát thương hoặc phá hủy
+                        if (asteroid.size / 2f >= asteroid.minSize)
+                        {
+                            asteroid.CreateSplit();
+                            asteroid.CreateSplit();
+                        }
+
+                        Instantiate(asteroid.explosionPrefab, asteroid.transform.position, Quaternion.identity);
+                        Destroy(asteroid.gameObject);
+                    }
                 }
             }
         }

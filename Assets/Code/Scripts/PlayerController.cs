@@ -1,10 +1,12 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem; 
 
 public class PlayerController : MonoBehaviour
 {
     public float speed = 10f;
     private Vector2 moveInput;
+    public float invincibleDuration = 5f;
+    private float lastHitTime = -999f;
 
     private PlayerInputActions inputActions;
 
@@ -30,6 +32,21 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         MovePlayer();
+    }
+    public bool IsInvincible()
+    {
+        return Time.time - lastHitTime < invincibleDuration;
+    }
+
+    public float IsInvincibleTime()
+    {
+        return invincibleDuration - (Time.time - lastHitTime);
+    }
+
+    public void TakeDamage()
+    {
+        lastHitTime = Time.time;
+        // TODO: giảm máu, hiệu ứng, animation...
     }
 
     void MovePlayer()

@@ -8,7 +8,7 @@ public class AsteroidSpawn : MonoBehaviour
     public float trajectoryVariance = 15f;
     public float spawnRate = 2f;
     public float spawnDistance = 15f;
-    public int spawnAmount = 1;
+    public int spawnAmount = 3;
 
     private void Start()
     {
