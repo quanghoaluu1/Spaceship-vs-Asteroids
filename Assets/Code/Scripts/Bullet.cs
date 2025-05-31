@@ -14,6 +14,8 @@ public class Bullet : MonoBehaviour
     private AudioSource audioSource;
     private PlayerInputActions inputActions;
 
+    private static int maxBullets = 10;
+
     private void Awake()
     {
         inputActions = new PlayerInputActions();
@@ -26,6 +28,12 @@ public class Bullet : MonoBehaviour
 
     private void Fire()
     {
+        if (GameObject.FindGameObjectsWithTag("LaserShot").Length >= maxBullets)
+        {
+            Debug.LogWarning("Max bullet limit reached");
+            return;
+        }
+
         if (Time.time - lastFireTime < fireCooldown) return;
         lastFireTime = Time.time;
 

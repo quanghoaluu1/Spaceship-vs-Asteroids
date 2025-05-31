@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ColorfulLaser : MonoBehaviour
+public class InstantLaser : MonoBehaviour
 {
     public Transform firePoint;
     public float maxDistance = 100f;
@@ -81,21 +81,51 @@ public class ColorfulLaser : MonoBehaviour
 
     private void UpdateLaser()
     {
-        RaycastHit hit;
-        Vector3 startPos = firePoint.position;
-        Vector3 direction = firePoint.up;  
+        Vector2 startPos = firePoint.position;
+        Vector2 direction = firePoint.up;
 
         lineRenderer.positionCount = 2;
         lineRenderer.SetPosition(0, startPos);
 
-        if (Physics.Raycast(startPos, direction, out hit, maxDistance, hitLayers))
+        RaycastHit2D hit = Physics2D.Raycast(startPos, direction, maxDistance, hitLayers);
+
+        if (hit.collider != null)
         {
             lineRenderer.SetPosition(1, hit.point);
-            Debug.Log("Trúng " + hit.collider.name);
+            //Debug.Log("Trúng " + hit.collider.name);
+
+            if (hit.collider.CompareTag("Asteroid"))
+            {
+                Asteroid asteroid = hit.collider.GetComponent<Asteroid>();
+                if (asteroid != null)
+                {
+                    asteroid.TakeDamageFromLaser(); // Gọi hàm xử lý
+                }
+            }
         }
         else
         {
             lineRenderer.SetPosition(1, startPos + direction * maxDistance);
         }
     }
+
+    //private void UpdateLaser()
+    //{
+    //    RaycastHit hit;
+    //    Vector3 startPos = firePoint.position;
+    //    Vector3 direction = firePoint.up;  
+
+    //    lineRenderer.positionCount = 2;
+    //    lineRenderer.SetPosition(0, startPos);
+
+    //    if (Physics.Raycast(startPos, direction, out hit, maxDistance, hitLayers))
+    //    {
+    //        lineRenderer.SetPosition(1, hit.point);
+    //        Debug.Log("Trúng " + hit.collider.name);
+    //    }
+    //    else
+    //    {
+    //        lineRenderer.SetPosition(1, startPos + direction * maxDistance);
+    //    }
+    //}
 }
