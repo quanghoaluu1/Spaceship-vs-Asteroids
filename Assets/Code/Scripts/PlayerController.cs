@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.InputSystem; 
 
 public class PlayerController : MonoBehaviour
@@ -8,6 +9,14 @@ public class PlayerController : MonoBehaviour
     public float invincibleDuration = 5f;
     private float lastHitTime = -999f;
 
+    public GameObject shield;
+    private bool isInvincible = false;
+    private SpriteRenderer SpriteRenderer;
+    public GameObject pulse1;
+    public GameObject pulse2;
+
+    private SpriteRenderer pulse1Renderer;
+    private SpriteRenderer pulse2Renderer;
     private PlayerInputActions inputActions;
 
     void Awake()
@@ -17,6 +26,12 @@ public class PlayerController : MonoBehaviour
        
         inputActions.Player.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
         inputActions.Player.Move.canceled += ctx => moveInput = Vector2.zero;
+
+        SpriteRenderer = GetComponent<SpriteRenderer>();
+        shield.SetActive(false);
+
+        pulse1Renderer = pulse1.GetComponent<SpriteRenderer>();
+        pulse2Renderer = pulse2.GetComponent<SpriteRenderer>();
     }
 
     void OnEnable()
@@ -59,5 +74,37 @@ public class PlayerController : MonoBehaviour
         clampedPosition.x = Mathf.Clamp(clampedPosition.x, 0.05f, 0.95f);
         clampedPosition.y = Mathf.Clamp(clampedPosition.y, 0.05f, 0.95f);
         transform.position = Camera.main.ViewportToWorldPoint(clampedPosition);
+    }
+
+    public void ActivateShield()
+    {
+        if (isInvincible) return;
+        lastHitTime = Time.time;
+        StartCoroutine(ShieldRoutine());
+    }
+
+    private IEnumerator ShieldRoutine()
+    {
+        isInvincible = true;
+        shield.SetActive(true);
+
+        float elapsed = 0f;
+        bool visible = true;
+
+        while (elapsed < invincibleDuration)
+        {
+            visible = !visible;
+            SpriteRenderer.enabled = visible;
+            pulse1Renderer.enabled = visible;
+            pulse2Renderer.enabled = visible;
+            elapsed += 0.2f;
+            yield return new WaitForSeconds(0.2f);
+        }
+
+        pulse1Renderer.enabled = true;
+        pulse2Renderer.enabled = true;
+        SpriteRenderer.enabled = true;
+        shield.SetActive(false);
+        isInvincible = false;
     }
 }

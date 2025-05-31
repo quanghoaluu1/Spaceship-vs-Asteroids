@@ -17,7 +17,9 @@ public class Asteroid : MonoBehaviour
     public float spawnTime;            
     public float asteroidInvincibleTime = 0.5f; // thời gian miễn nhiễm của thiên thạch (500ms)
 
-    public static int life = 2;     // Số mạng của player
+    public AudioClip getHitSound;
+    private AudioSource audioSource;
+    public static int life = 3;     // Số mạng của player
 
     private void Awake()
     {
@@ -32,6 +34,7 @@ public class Asteroid : MonoBehaviour
         _spriteRenderer.transform.eulerAngles = new Vector3(0f, 0f, Random.value * 360f);
         this.transform.localScale = Vector3.one * size;
         _rigitbody.mass = size;
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void SetTrajectory(Vector2 direction)
@@ -61,29 +64,31 @@ public class Asteroid : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.CompareTag("Player"))
         {
             PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
-            if (playerController != null && playerController.IsInvincible())
-            {
-                Debug.Log("Player đang bất tử, không mất máu trong " + playerController.IsInvincibleTime());
+            if (playerController == null) return;
 
+            if (playerController.IsInvincible())
+            {
+                Debug.Log("Player đang bất tử, không mất máu. Còn " + playerController.IsInvincibleTime() + " giây.");
                 Destroy(this.gameObject);
                 return;
             }
+            PlaySoundAtPosition(getHitSound, transform.position, 3f);
 
-            // Gây sát thương cho player
+            // ❗ Nếu đến đây là chắc chắn chưa bất tử → xử lý mất máu và kích hoạt khiên
+            life--;
+
+            playerController.ActivateShield(); // Bật trạng thái bất tử + khiên + nhấp nháy
+            Debug.Log("Player bị thiên thạch đâm! Còn " + life + " máu.");
+
             if (life <= 0)
             {
                 GameOver();
             }
-            else
-            {
-                life--;
-                playerController.TakeDamage();  // Ghi nhận thời gian bị đâm
-                Debug.Log("Player bị thiên thạch đâm!");
-                Destroy(this.gameObject);
-            }
+
+            Destroy(this.gameObject);
         }
     }
 
@@ -155,5 +160,19 @@ public class Asteroid : MonoBehaviour
 
             newAsteroid.SetTrajectory(finalDirection);
         }
+    }
+
+    private void PlaySoundAtPosition(AudioClip clip, Vector3 position, float volume = 1f)
+    {
+        GameObject tempGO = new GameObject("TempAudio");
+        tempGO.transform.position = position;
+
+        AudioSource aSource = tempGO.AddComponent<AudioSource>();
+        aSource.clip = clip;
+        aSource.volume = volume;
+        aSource.spatialBlend = 0f; // 0 = 2D sound
+        aSource.Play();
+
+        Destroy(tempGO, clip.length);
     }
 }
