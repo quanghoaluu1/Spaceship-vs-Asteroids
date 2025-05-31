@@ -75,7 +75,7 @@ public class Asteroid : MonoBehaviour
                 Destroy(this.gameObject);
                 return;
             }
-            PlaySoundAtPosition(getHitSound, transform.position, 3f);
+            PlaySoundAtPosition(getHitSound, transform.position, 5f);
 
             // ❗ Nếu đến đây là chắc chắn chưa bất tử → xử lý mất máu và kích hoạt khiên
             life--;

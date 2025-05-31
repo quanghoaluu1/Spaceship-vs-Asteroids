@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: d858c9c67b203e3409e8459b9c99aaa6
+guid: 31af8eeb3aab1484189ac1c9f8a6a769
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7142066444140944270
-    second: Spaceship_tut_thin_0
+      213: -2442864979342095879
+    second: ship by parts a_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Spaceship_tut_thin_0
+      name: ship by parts a_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 122
-        height: 241
+        width: 469
+        height: 578
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e8b12453797bd1360800000000000000
-      internalID: 7142066444140944270
+      spriteID: 9f982108e33391ed0800000000000000
+      internalID: -2442864979342095879
       vertices: []
       indices: 
       edges: []
@@ -147,8 +147,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      Spaceship_tut_thin_0: 7142066444140944270
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

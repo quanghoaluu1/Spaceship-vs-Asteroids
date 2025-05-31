@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem; 
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -21,13 +21,22 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
+        SpriteRenderer = GetComponent<SpriteRenderer>();
+        if (SkinManager.Instance != null)
+        {
+            SpriteRenderer.sprite = SkinManager.Instance.GetCurrentSkin();
+        }
+        else
+        {
+            Debug.LogWarning("SkinManager is NULL — running gameplay scene directly?");
+        }
+
         inputActions = new PlayerInputActions();
 
-       
+
         inputActions.Player.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
         inputActions.Player.Move.canceled += ctx => moveInput = Vector2.zero;
 
-        SpriteRenderer = GetComponent<SpriteRenderer>();
         shield.SetActive(false);
 
         pulse1Renderer = pulse1.GetComponent<SpriteRenderer>();
@@ -108,3 +117,4 @@ public class PlayerController : MonoBehaviour
         isInvincible = false;
     }
 }
+
