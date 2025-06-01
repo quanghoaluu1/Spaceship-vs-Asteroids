@@ -3123,8 +3123,8 @@ MonoBehaviour:
   scrollSpeed: 0.1
   backgroundMaterials:
   - {fileID: 2100000, guid: c71251019480c0545bcb3a1f4f706c89, type: 2}
-  - {fileID: 2100000, guid: 6831d260d271bd54a81f18d344a5b2bf, type: 2}
   - {fileID: 2100000, guid: 69f3d7c3ea74700409d8bda7eb9ea461, type: 2}
+  - {fileID: 2100000, guid: 6831d260d271bd54a81f18d344a5b2bf, type: 2}
 --- !u!64 &1713328388
 MeshCollider:
   m_ObjectHideFlags: 0
