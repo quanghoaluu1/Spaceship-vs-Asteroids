@@ -1,9 +1,11 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PauseManager : MonoBehaviour
 {
     public GameObject pausePanel;
     private bool isPaused = false;
+    public Button targetButton;
 
     void Update()
     {
@@ -19,6 +21,7 @@ public class PauseManager : MonoBehaviour
 
         Time.timeScale = isPaused ? 0 : 1;
         pausePanel.SetActive(isPaused);
+        targetButton.gameObject.SetActive(false);
     }
 
     public void ResumeGame()
@@ -26,11 +29,13 @@ public class PauseManager : MonoBehaviour
         isPaused = false;
         Time.timeScale = 1;
         pausePanel.SetActive(false);
+        targetButton.gameObject.SetActive(true);
+
     }
 
     //public void BackToMenu()
     //{
-       // Time.timeScale = 1;
-       // UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+    //    Time.timeScale = 1;
+    //    UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
     //}
 }
