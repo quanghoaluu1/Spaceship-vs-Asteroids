@@ -33,8 +33,8 @@ public class BGScroll : MonoBehaviour
     void UpdateBackgroundByScore(int score)
     {
         int newIndex = 0;
-        if (score >= 10) newIndex = 2;
-        else if (score >= 5) newIndex = 1;
+        if (score >= 40) newIndex = 2;
+        else if (score >= 20) newIndex = 1;
 
         if (newIndex != currentIndex)
         {

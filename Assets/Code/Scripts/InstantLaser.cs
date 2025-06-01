@@ -104,11 +104,11 @@ public class InstantLaser : MonoBehaviour
                         // Gây sát thương hoặc phá hủy
                         if (asteroid.size / 2f >= asteroid.minSize)
                         {
-                            if (ScoreManager.Instance.score >= 40 && ScoreManager.Instance.score < 80)
+                            if (ScoreManager.Instance.score >= 20 && ScoreManager.Instance.score < 40)
                             {
                                 asteroid.CreateSplit();
                             }
-                            else if (ScoreManager.Instance.score >= 80)
+                            else if (ScoreManager.Instance.score >= 40)
                             {
                                 asteroid.CreateSplit();
                                 asteroid.CreateSplit();
