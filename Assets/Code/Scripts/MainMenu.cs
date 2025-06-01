@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    public GameObject instructionPanel;
+    private bool isOpen = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void PlayGame()
     {
@@ -13,7 +15,8 @@ public class MainMenu : MonoBehaviour
 
     public void HowToPlay()
     {
-        SceneManager.LoadSceneAsync(1);
+        isOpen = !isOpen;
+        instructionPanel.SetActive(true);
     }
 
     public void GoBackToMainMenu()
@@ -25,5 +28,12 @@ public class MainMenu : MonoBehaviour
     public void Quit()
     {
         Application.Quit();
+    }
+
+    public void QuitInstruction()
+    {
+        isOpen = !isOpen;
+        instructionPanel.SetActive(false);
+
     }
 }

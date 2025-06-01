@@ -28,7 +28,7 @@ public class TMPHoverAndClickColor : MonoBehaviour, IPointerEnterHandler, IPoint
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (tmpText != null)
+        if (tmpText != null) { }
             tmpText.color = hoverColor;
     }
 
