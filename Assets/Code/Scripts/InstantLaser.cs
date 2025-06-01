@@ -92,7 +92,6 @@ public class InstantLaser : MonoBehaviour
         if (hit.collider != null)
         {
             lineRenderer.SetPosition(1, hit.point);
-            //Debug.Log("Trúng " + hit.collider.name);
 
             if (hit.collider.CompareTag("Asteroid"))
             {
@@ -105,8 +104,15 @@ public class InstantLaser : MonoBehaviour
                         // Gây sát thương hoặc phá hủy
                         if (asteroid.size / 2f >= asteroid.minSize)
                         {
-                            asteroid.CreateSplit();
-                            asteroid.CreateSplit();
+                            if (ScoreManager.Instance.score >= 40 && ScoreManager.Instance.score < 80)
+                            {
+                                asteroid.CreateSplit();
+                            }
+                            else if (ScoreManager.Instance.score >= 80)
+                            {
+                                asteroid.CreateSplit();
+                                asteroid.CreateSplit();
+                            }
                         }
 
                         if (ScoreManager.Instance != null)
@@ -130,24 +136,4 @@ public class InstantLaser : MonoBehaviour
             lineRenderer.SetPosition(1, startPos + direction * maxDistance);
         }
     }
-
-    //private void UpdateLaser()
-    //{
-    //    RaycastHit hit;
-    //    Vector3 startPos = firePoint.position;
-    //    Vector3 direction = firePoint.up;  
-
-    //    lineRenderer.positionCount = 2;
-    //    lineRenderer.SetPosition(0, startPos);
-
-    //    if (Physics.Raycast(startPos, direction, out hit, maxDistance, hitLayers))
-    //    {
-    //        lineRenderer.SetPosition(1, hit.point);
-    //        Debug.Log("Trúng " + hit.collider.name);
-    //    }
-    //    else
-    //    {
-    //        lineRenderer.SetPosition(1, startPos + direction * maxDistance);
-    //    }
-    //}
 }

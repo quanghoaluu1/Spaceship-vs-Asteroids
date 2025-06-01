@@ -7,21 +7,22 @@ public class Asteroid : MonoBehaviour
     public float size = 1f;
     public float maxSize = 2f;
     public float minSize = 0.5f;
-    public float speed = 200f;
+    private float speed = 200f;
     public float maxLifetime = 5f;
     private SpriteRenderer _spriteRenderer;
     private Rigidbody2D _rigitbody;
     public GameObject explosionPrefab;
     public float playerInvincibleTime = 5f; // thời gian miễn nhiễm của player (5 giây)
 
-    public float spawnTime;            
-    public float asteroidInvincibleTime = 0.5f; // thời gian miễn nhiễm của thiên thạch (500ms)
+    public float spawnTime;
+    public float asteroidInvincibleTime = 0.1f; // thời gian miễn nhiễm của thiên thạch (500ms)
 
     public AudioClip getHitSound;
     public AudioClip overSound;
     private AudioSource audioSource;
-    public static int life = 3;     // Số mạng của player
+    private static int life = 3;     // Số mạng của player
     public HeartUIController heartUI;
+
     private void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -30,9 +31,16 @@ public class Asteroid : MonoBehaviour
 
     void Start()
     {
+        //Gán thời gian spawn cho thiên thạch, để kiểm tra bất tử (tránh việc bị bắn ngay khi spawn)
         spawnTime = Time.time;
+
+        //Chọn ngẫu nhiên sprite từ mảng asteroidSprites
         _spriteRenderer.sprite = asteroidSprites[Random.Range(0, asteroidSprites.Length)];
+
+        //Thiên thạch sẽ xoay góc ngẫu nhiên
         _spriteRenderer.transform.eulerAngles = new Vector3(0f, 0f, Random.value * 360f);
+
+        // Đặt kích thước của thiên thạch
         this.transform.localScale = Vector3.one * size;
         _rigitbody.mass = size;
         audioSource = GetComponent<AudioSource>();
@@ -40,6 +48,15 @@ public class Asteroid : MonoBehaviour
 
     public void SetTrajectory(Vector2 direction)
     {
+        if (ScoreManager.Instance.score >= 80)
+        {
+            speed = 300f;
+        }
+        else if (ScoreManager.Instance.score >= 40)
+        {
+            speed = 250f;
+        }
+
         _rigitbody.linearDamping = 0f;
         _rigitbody.AddForce(direction * speed);
         Destroy(gameObject, maxLifetime);
@@ -48,6 +65,7 @@ public class Asteroid : MonoBehaviour
     public void OnCollisionEnter2D(Collision2D collision)
     {
         Debug.Log("Va chạm xảy ra với: " + collision.gameObject.name);
+
         if (collision.gameObject.tag == "LaserShot")
         {
             if (Time.time - spawnTime < asteroidInvincibleTime)
@@ -55,24 +73,18 @@ public class Asteroid : MonoBehaviour
                 return; // miễn nhiễm tạm thời khi mới spawn
             }
 
-            Debug.Log("Thử cộng điểm");
+            //Debug.Log("Thử cộng điểm");
             ScoreManager.Instance?.AddScore(1); // Dùng ?. để tránh lỗi null
 
-            if (ScoreManager.Instance != null)
+            if (size >= 1f) // bạn tự chọn ngưỡng lớn – nhỏ, ví dụ: >= 1 là lớn
             {
-                Debug.Log("Cộng điểm!");
-                ScoreManager.Instance.AddScore(1);
+                ScoreManager.Instance.AddScore(2);
             }
             else
             {
-                Debug.LogWarning("ScoreManager.Instance == null");
+                ScoreManager.Instance.AddScore(1);
             }
 
-            //if (size / 2f >= minSize)
-            //{
-            //    CreateSplit();
-            //    CreateSplit();
-            //}
             Instantiate(explosionPrefab, collision.transform.position, Quaternion.identity);
             Destroy(collision.gameObject);
             Destroy(this.gameObject);
@@ -90,7 +102,7 @@ public class Asteroid : MonoBehaviour
                 Destroy(this.gameObject);
                 return;
             }
-            
+
             PlaySoundAtPosition(getHitSound, transform.position, 5f);
 
             // ❗ Nếu đến đây là chắc chắn chưa bất tử → xử lý mất máu và kích hoạt khiên
@@ -100,7 +112,7 @@ public class Asteroid : MonoBehaviour
 
             if (life <= 0)
             {
-                
+
                 GameOver();
             }
             Instantiate(explosionPrefab, collision.transform.position, Quaternion.identity);
@@ -108,23 +120,6 @@ public class Asteroid : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-
-    public void TakeDamageFromLaser()
-    {
-        if (size / 2f >= minSize)
-        {
-            CreateSplit();
-            CreateSplit();
-        }
-
-        if (explosionPrefab != null)
-        {
-            Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-        }
-
-        Destroy(this.gameObject);
-    }
-
 
     private void GameOver()
     {
@@ -159,6 +154,7 @@ public class Asteroid : MonoBehaviour
         }
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
+
         if (player == null)
         {
             return; // Không tìm thấy player, không chia nhỏ
@@ -176,7 +172,7 @@ public class Asteroid : MonoBehaviour
             newAsteroid.minSize = this.minSize;
             newAsteroid.explosionPrefab = this.explosionPrefab;
             newAsteroid.asteroidSprites = this.asteroidSprites;
-            newAsteroid.asteroidInvincibleTime = 0.5f; // Cho miễn nhiễm khi spawn
+            newAsteroid.asteroidInvincibleTime = 0.1f; // Cho miễn nhiễm khi spawn
 
             // Đặt lại sprite
             SpriteRenderer sr = newAsteroid.GetComponent<SpriteRenderer>();

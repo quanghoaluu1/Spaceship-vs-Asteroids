@@ -4,8 +4,6 @@ public class Star : MonoBehaviour
 {
     public Sprite[] starSprites;
     public float size = 1f;
-    public float maxSize = 1.5f;
-    public float minSize = 0.5f;
     public float speed = 10f;
     public float maxLifetime = 5f;
     private SpriteRenderer _spriteRenderer;
