@@ -109,6 +109,16 @@ public class InstantLaser : MonoBehaviour
                             asteroid.CreateSplit();
                         }
 
+                        if (ScoreManager.Instance != null)
+                        {
+                            Debug.Log("Cộng điểm!");
+                            ScoreManager.Instance.AddScore(1);
+                        }
+                        else
+                        {
+                            Debug.LogWarning("ScoreManager.Instance == null");
+                        }
+
                         Instantiate(asteroid.explosionPrefab, asteroid.transform.position, Quaternion.identity);
                         Destroy(asteroid.gameObject);
                     }

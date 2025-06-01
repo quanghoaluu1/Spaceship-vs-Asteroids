@@ -82,6 +82,7 @@ public class Asteroid : MonoBehaviour
             PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
             if (playerController == null) return;
 
+
             if (playerController.IsInvincible())
             {
                 Debug.Log("Player đang bất tử, không mất máu. Còn " + playerController.IsInvincibleTime() + " giây.");
