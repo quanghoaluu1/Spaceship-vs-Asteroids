@@ -12,12 +12,14 @@ public class ScoreManager : MonoBehaviour
     {
         if (Instance == null)
             Instance = this;
+
     }
 
     public void AddScore(int amount)
     {
         score += amount;
         UpdateScoreUI();
+        //UpdateBackground();
     }
 
     private void UpdateScoreUI()
@@ -25,4 +27,6 @@ public class ScoreManager : MonoBehaviour
         if (scoreText != null)
             scoreText.text = "Score: " + score;
     }
+
+    
 }

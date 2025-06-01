@@ -6,6 +6,7 @@ public class MainMenu : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void PlayGame()
     {
+        ScoreManager.Instance = null;
         SceneManager.LoadSceneAsync(1);
     }
 
@@ -16,6 +17,7 @@ public class MainMenu : MonoBehaviour
 
     public void GoBackToMainMenu()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadSceneAsync(0);
     }
 

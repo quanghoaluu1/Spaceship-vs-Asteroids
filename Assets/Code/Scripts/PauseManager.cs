@@ -28,9 +28,9 @@ public class PauseManager : MonoBehaviour
         pausePanel.SetActive(false);
     }
 
-    public void BackToMenu()
-    {
-        Time.timeScale = 1;
-        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
-    }
+    //public void BackToMenu()
+    //{
+       // Time.timeScale = 1;
+       // UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+    //}
 }
