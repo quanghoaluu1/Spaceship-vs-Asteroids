@@ -1,4 +1,4 @@
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 public class TimeManager : MonoBehaviour
@@ -6,13 +6,20 @@ public class TimeManager : MonoBehaviour
     public static TimeManager Instance;
 
     public TextMeshProUGUI timeText;
-    private float elapsedTime = 0f;
+    public float elapsedTime = 0f;
     private bool isGameOver = false;
 
     void Awake()
     {
         if (Instance == null)
+        {
             Instance = this;
+            DontDestroyOnLoad(gameObject); // 👈 dòng này để giữ lại object khi chuyển scene
+        }
+        else
+        {
+            Destroy(gameObject); // tránh trùng lặp
+        }
     }
 
     void Update()
