@@ -31,6 +31,7 @@ public class Asteroid : MonoBehaviour
 
     void Start()
     {
+        life = 3;
         //Gán thời gian spawn cho thiên thạch, để kiểm tra bất tử (tránh việc bị bắn ngay khi spawn)
         spawnTime = Time.time;
 
