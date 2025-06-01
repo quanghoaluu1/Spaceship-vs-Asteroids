@@ -18,7 +18,6 @@ public class Asteroid : MonoBehaviour
     public float asteroidInvincibleTime = 0.1f; // thời gian miễn nhiễm của thiên thạch (500ms)
 
     public AudioClip getHitSound;
-    public AudioClip overSound;
     private AudioSource audioSource;
     private static int life = 3;     // Số mạng của player
     public HeartUIController heartUI;
@@ -31,7 +30,6 @@ public class Asteroid : MonoBehaviour
 
     void Start()
     {
-        life = 3;
         //Gán thời gian spawn cho thiên thạch, để kiểm tra bất tử (tránh việc bị bắn ngay khi spawn)
         spawnTime = Time.time;
 
@@ -107,43 +105,16 @@ public class Asteroid : MonoBehaviour
             PlaySoundAtPosition(getHitSound, transform.position, 5f);
 
             // ❗ Nếu đến đây là chắc chắn chưa bất tử → xử lý mất máu và kích hoạt khiên
-            life--;
             playerController.ActivateShield(); // Bật trạng thái bất tử + khiên + nhấp nháy
             Debug.Log("Player bị thiên thạch đâm! Còn " + life + " máu.");
 
-            if (life <= 0)
-            {
-
-                GameOver();
-            }
+            playerController.LoseLife();
             Instantiate(explosionPrefab, collision.transform.position, Quaternion.identity);
-            heartUI.UpdateHealth(life);
             Destroy(this.gameObject);
         }
     }
 
-    private void GameOver()
-    {
-
-        // Tạo 1 GameObject chứa AudioSource
-        GameObject audioObj = new GameObject("TempAudio");
-        AudioSource audio = audioObj.AddComponent<AudioSource>();
-        audio.clip = overSound;
-        audio.Play();
-
-        // Không bị destroy khi chuyển scene
-        DontDestroyOnLoad(audioObj);
-
-        Destroy(GameObject.FindGameObjectWithTag("Player"));
-        Destroy(this.gameObject);
-        Debug.Log("Ngỏm củ tỏi zồi");
-
-        Time.timeScale = 0f;
-        SceneManager.LoadSceneAsync(2);
-
-        // Tự huỷ sau khi âm thanh phát xong
-        Destroy(audioObj, overSound.length);
-    }
+    
 
     public void CreateSplit()
     {

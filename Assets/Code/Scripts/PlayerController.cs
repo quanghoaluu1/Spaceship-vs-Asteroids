@@ -1,9 +1,13 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+    public int life = 3;
+    public int currentLife = 3;
+
     public float speed = 10f;
     private Vector2 moveInput;
     public float invincibleDuration = 5f;
@@ -14,6 +18,8 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer SpriteRenderer;
     public GameObject pulse1;
     public GameObject pulse2;
+    public HeartUIController heartUI;
+    public AudioClip overSound;
 
     private SpriteRenderer pulse1Renderer;
     private SpriteRenderer pulse2Renderer;
@@ -41,6 +47,45 @@ public class PlayerController : MonoBehaviour
 
         pulse1Renderer = pulse1.GetComponent<SpriteRenderer>();
         pulse2Renderer = pulse2.GetComponent<SpriteRenderer>();
+    }
+    public void ResetLife()
+    {
+        currentLife = life;
+        // Gọi cập nhật UI nếu cần
+        heartUI.UpdateHealth(currentLife);
+    }
+
+    public void LoseLife()
+    {
+        currentLife--;
+        heartUI.UpdateHealth(currentLife);
+
+        if (currentLife <= 0)
+        {
+            GameOver();
+        }
+    }
+    public void GameOver()
+    {
+
+        // Tạo 1 GameObject chứa AudioSource
+        GameObject audioObj = new GameObject("TempAudio");
+        AudioSource audio = audioObj.AddComponent<AudioSource>();
+        audio.clip = overSound;
+        audio.Play();
+
+        // Không bị destroy khi chuyển scene
+        DontDestroyOnLoad(audioObj);
+
+        Destroy(GameObject.FindGameObjectWithTag("Player"));
+        Destroy(this.gameObject);
+        Debug.Log("Ngỏm củ tỏi zồi");
+
+        Time.timeScale = 0f;
+        SceneManager.LoadSceneAsync(2);
+
+        // Tự huỷ sau khi âm thanh phát xong
+        Destroy(audioObj, overSound.length);
     }
 
     void OnEnable()

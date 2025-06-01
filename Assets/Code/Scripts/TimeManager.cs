@@ -33,6 +33,7 @@ public class TimeManager : MonoBehaviour
 
     void UpdateTimeUI()
     {
+        if (timeText == null) return;
         int minutes = Mathf.FloorToInt(elapsedTime / 60f);
         int seconds = Mathf.FloorToInt(elapsedTime % 60f);
         timeText.text = $"{minutes:00}:{seconds:00}";
