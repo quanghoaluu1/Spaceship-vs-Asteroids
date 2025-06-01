@@ -41,10 +41,16 @@ public class Star : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
+            if (ScoreManager.Instance != null)
+            {
+                ScoreManager.Instance.AddScore(3);
+            }
+
             if (_audioSource != null && getStarSound != null)
             {
                 PlaySoundAtPosition(getStarSound, transform.position, 1.5f);
             }
+
             Destroy(gameObject);
         }
     }

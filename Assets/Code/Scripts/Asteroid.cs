@@ -46,12 +46,25 @@ public class Asteroid : MonoBehaviour
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
-
+        Debug.Log("Va chạm xảy ra với: " + collision.gameObject.name);
         if (collision.gameObject.tag == "LaserShot")
         {
             if (Time.time - spawnTime < asteroidInvincibleTime)
             {
                 return; // miễn nhiễm tạm thời khi mới spawn
+            }
+
+            Debug.Log("Thử cộng điểm");
+            ScoreManager.Instance?.AddScore(1); // Dùng ?. để tránh lỗi null
+
+            if (ScoreManager.Instance != null)
+            {
+                Debug.Log("Cộng điểm!");
+                ScoreManager.Instance.AddScore(1);
+            }
+            else
+            {
+                Debug.LogWarning("ScoreManager.Instance == null");
             }
 
             //if (size / 2f >= minSize)
