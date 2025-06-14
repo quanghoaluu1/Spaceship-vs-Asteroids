@@ -117,7 +117,6 @@ public class InstantLaser : MonoBehaviour
 
                         if (ScoreManager.Instance != null)
                         {
-                            Debug.Log("Cộng điểm!");
                             ScoreManager.Instance.AddScore(1);
                         }
                         else
@@ -128,6 +127,16 @@ public class InstantLaser : MonoBehaviour
                         Instantiate(asteroid.explosionPrefab, asteroid.transform.position, Quaternion.identity);
                         Destroy(asteroid.gameObject);
                     }
+                }
+            }
+
+            if (hit.collider.CompareTag("EnemySpaceship"))
+            {
+                EnemyController enemy = hit.collider.GetComponent<EnemyController>();
+                if (enemy != null)
+                {
+                    //enemy.TakeDamage(1);
+                    Destroy(enemy.gameObject);
                 }
             }
         }

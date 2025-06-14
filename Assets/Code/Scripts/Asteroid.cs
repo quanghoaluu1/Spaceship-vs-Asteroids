@@ -114,8 +114,6 @@ public class Asteroid : MonoBehaviour
         }
     }
 
-    
-
     public void CreateSplit()
     {
         float newSize = size / 2f;
