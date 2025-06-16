@@ -60,6 +60,8 @@ public class PlayerController : MonoBehaviour
         currentLife--;
         heartUI.UpdateHealth(currentLife);
 
+        StartCoroutine(CameraShake.Instance.Shake(0.5f, 0.3f));
+
         if (currentLife <= 0)
         {
             GameOver();
