@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: ac87de529e24d8c4c86b7498fb8a0090
+guid: f836cb344a23f374cb0b5bdcbd9e7ea1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2531241511545790211
-    second: Enemy3_0
+      213: 675151256554756322
+    second: Boss3_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Enemy3_0
+      name: Boss3_0
       rect:
         serializedVersion: 2
-        x: 3
-        y: 3
-        width: 706
-        height: 714
+        x: 0
+        y: 0
+        width: 286
+        height: 365
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: df0279f91493fdcd0800000000000000
-      internalID: -2531241511545790211
+      spriteID: 2e8da90ad7e9e5900800000000000000
+      internalID: 675151256554756322
       vertices: []
       indices: 
       edges: []

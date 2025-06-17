@@ -13,5 +13,13 @@ public class ObjectCleaner : MonoBehaviour
         {
             Destroy(other.gameObject);
         }
+        else if (other.CompareTag("EnemyBullet"))
+        {
+            Destroy(other.gameObject);
+        }
+        else if (other.CompareTag("Star"))
+        {
+            Destroy(other.gameObject);
+        }
     }
 }

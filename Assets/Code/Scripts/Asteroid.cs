@@ -38,11 +38,15 @@ public class Asteroid : MonoBehaviour
 
         //Thiên thạch sẽ xoay góc ngẫu nhiên
         _spriteRenderer.transform.eulerAngles = new Vector3(0f, 0f, Random.value * 360f);
-
         // Đặt kích thước của thiên thạch
         this.transform.localScale = Vector3.one * size;
         _rigitbody.mass = size;
         audioSource = GetComponent<AudioSource>();
+    }
+
+    private void Update()
+    {
+        transform.Rotate(0, 0, 360f * Time.deltaTime);
     }
 
     public void SetTrajectory(Vector2 direction)
@@ -84,6 +88,15 @@ public class Asteroid : MonoBehaviour
                 ScoreManager.Instance.AddScore(1);
             }
 
+            Instantiate(explosionPrefab, collision.transform.position, Quaternion.identity);
+            Destroy(collision.gameObject);
+            Destroy(this.gameObject);
+        }
+
+        if (collision.gameObject.tag == "EnemyBullet" 
+            || collision.gameObject.tag == "EnemySpaceship")
+        {
+            CreateSplit();
             Instantiate(explosionPrefab, collision.transform.position, Quaternion.identity);
             Destroy(collision.gameObject);
             Destroy(this.gameObject);
