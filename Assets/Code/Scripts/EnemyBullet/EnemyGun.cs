@@ -12,12 +12,6 @@ public class EnemyGun : MonoBehaviour
         InvokeRepeating("FireEnemyBullet", 1f, 2f); // Bắn lần đầu sau 1s, rồi cứ 2s bắn 1 viên
     }
 
-    // Update is called once per frame
-    //void Update()
-    //{
-
-    //}
-
     void FireEnemyBullet()
     {
         GameObject playerShip = GameObject.Find("Player");

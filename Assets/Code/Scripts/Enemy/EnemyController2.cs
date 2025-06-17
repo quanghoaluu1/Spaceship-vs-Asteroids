@@ -1,17 +1,20 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class BossEnemyController : MonoBehaviour
+public class BossController : MonoBehaviour
 {
     public float horizontalSpeed = 3f;
     public float verticalSpeed = 2f;
-    private float travelDistance = 7f;
+    private float travelDistance = 6f;
 
     private Rigidbody2D rb;
     private Vector2 initialPosition;
     private bool startVerticalMovement = false;
     private Vector2 verticalDirection = Vector2.up;
     private float verticalPadding = 3f;
+
+    public delegate void BossDefeated();
+    public event BossDefeated OnBossDefeated;
 
     void Awake()
     {
@@ -47,5 +50,38 @@ public class BossEnemyController : MonoBehaviour
 
             rb.MovePosition(currentPos + verticalDirection * verticalSpeed * Time.fixedDeltaTime);
         }
+    }
+
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
+            if (playerController == null) return;
+
+
+            if (playerController.IsInvincible())
+            {
+                Debug.Log("Player đang bất tử, không mất máu. Còn " + playerController.IsInvincibleTime() + " giây.");
+                return;
+            }
+
+            playerController.ActivateShield(); // Bật trạng thái bất tử + khiên + nhấp nháy
+
+            playerController.LoseLife();
+
+        }
+
+        if (collision.gameObject.CompareTag("Asteroid"))
+        {
+            // Xóa thiên thạch
+            Destroy(collision.gameObject);
+        }
+    }
+    public void Die()
+    {
+        // Hiệu ứng chết, v.v...
+        OnBossDefeated?.Invoke();
+        Destroy(gameObject);
     }
 }

@@ -139,6 +139,15 @@ public class InstantLaser : MonoBehaviour
                     Destroy(enemy.gameObject);
                 }
             }
+            if (hit.collider.CompareTag("Boss"))
+            {
+                BossController boss = hit.collider.GetComponent<BossController>();
+                if (boss != null)
+                {
+                    boss.Die();
+                    Destroy(boss.gameObject);
+                }
+            }
         }
         else
         {

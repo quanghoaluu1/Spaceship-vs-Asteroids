@@ -21,5 +21,9 @@ public class ObjectCleaner : MonoBehaviour
         {
             Destroy(other.gameObject);
         }
+        else if (other.CompareTag("Boss"))
+        {
+            Destroy(other.gameObject);
+        }
     }
 }

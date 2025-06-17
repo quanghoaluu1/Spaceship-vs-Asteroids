@@ -116,10 +116,10 @@ TextureImporter:
       name: Bullet3_0
       rect:
         serializedVersion: 2
-        x: 2
-        y: 7
-        width: 17
-        height: 231
+        x: 7
+        y: 4
+        width: 231
+        height: 17
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

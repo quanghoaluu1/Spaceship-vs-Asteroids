@@ -22,6 +22,8 @@ public class Asteroid : MonoBehaviour
     private static int life = 3;     // Số mạng của player
     public HeartUIController heartUI;
 
+    public int gameMode = 0; // 0 = vô tận, 1 = Boss
+
     private void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -62,12 +64,11 @@ public class Asteroid : MonoBehaviour
 
         _rigitbody.linearDamping = 0f;
         _rigitbody.AddForce(direction * speed);
-        Destroy(gameObject, maxLifetime);
+        //Destroy(gameObject, maxLifetime);
     }
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Va chạm xảy ra với: " + collision.gameObject.name);
 
         if (collision.gameObject.tag == "LaserShot")
         {
@@ -93,8 +94,7 @@ public class Asteroid : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        if (collision.gameObject.tag == "EnemyBullet" 
-            || collision.gameObject.tag == "EnemySpaceship")
+        if (collision.gameObject.tag == "EnemyBullet")
         {
             CreateSplit();
             Instantiate(explosionPrefab, collision.transform.position, Quaternion.identity);

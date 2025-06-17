@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5912274925057664221
+--- !u!1 &4433177680305758156
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,41 +8,40 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7286279137342485395}
-  - component: {fileID: 6155532289525512829}
+  - component: {fileID: 7831338483106203361}
+  - component: {fileID: 2490075522300134172}
   m_Layer: 0
-  m_Name: EnemySpaceship Spawner
+  m_Name: Asteroid Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &7286279137342485395
+  m_IsActive: 1
+--- !u!4 &7831338483106203361
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5912274925057664221}
+  m_GameObject: {fileID: 4433177680305758156}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.70491, y: -1.1757, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6155532289525512829
+--- !u!114 &2490075522300134172
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5912274925057664221}
+  m_GameObject: {fileID: 4433177680305758156}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62267f9bf3075c44fb1c920bad9d058b, type: 3}
+  m_Script: {fileID: 11500000, guid: 12cade30c3ae5704f9489ca0415fa6d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 1346246462976501792, guid: b919f8bdf840293478900ae71d8f099f, type: 3}
-  enemyPrefab2: {fileID: 237012794070253110, guid: d9e4ae381f0380f4f8696cfb2cfdcf92, type: 3}
+  asteroidPrefab: {fileID: 8908602153031027856, guid: 01c3e9a7d026ff74d90082705e7998d0, type: 3}
