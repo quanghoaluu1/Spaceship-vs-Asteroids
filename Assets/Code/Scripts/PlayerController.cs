@@ -5,9 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    public int life = 3;
-    public int currentLife = 3;
-
+    public int maxHealth = 50;
+    public int currentHealth = 100;
     public float speed = 10f;
     private Vector2 moveInput;
     public float invincibleDuration = 5f;
@@ -29,108 +28,61 @@ public class PlayerController : MonoBehaviour
     {
         SpriteRenderer = GetComponent<SpriteRenderer>();
         if (SkinManager.Instance != null)
-        {
             SpriteRenderer.sprite = SkinManager.Instance.GetCurrentSkin();
-        }
-        else
-        {
-            Debug.LogWarning("SkinManager is NULL — running gameplay scene directly?");
-        }
 
         inputActions = new PlayerInputActions();
-
-
         inputActions.Player.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
         inputActions.Player.Move.canceled += ctx => moveInput = Vector2.zero;
 
         shield.SetActive(false);
-
         pulse1Renderer = pulse1.GetComponent<SpriteRenderer>();
         pulse2Renderer = pulse2.GetComponent<SpriteRenderer>();
     }
-    public void ResetLife()
+
+    void Start()
     {
-        currentLife = life;
-        // Gọi cập nhật UI nếu cần
-        heartUI.UpdateHealth(currentLife);
+        currentHealth = maxHealth;
+        heartUI.SetMaxHealth(maxHealth);    // Cho thanh máu dạng slider
+        heartUI.UpdateHealth(currentHealth);
     }
 
-    public void LoseLife()
-    {
-        currentLife--;
-        heartUI.UpdateHealth(currentLife);
+    void OnEnable() => inputActions.Enable();
+    void OnDisable() => inputActions.Disable();
 
-        StartCoroutine(CameraShake.Instance.Shake(0.5f, 0.3f));
-
-        if (currentLife <= 0)
-        {
-            GameOver();
-        }
-    }
-    public void GameOver()
-    {
-
-        // Tạo 1 GameObject chứa AudioSource
-        GameObject audioObj = new GameObject("TempAudio");
-        AudioSource audio = audioObj.AddComponent<AudioSource>();
-        audio.clip = overSound;
-        audio.Play();
-
-        // Không bị destroy khi chuyển scene
-        DontDestroyOnLoad(audioObj);
-
-        Destroy(GameObject.FindGameObjectWithTag("Player"));
-        Destroy(this.gameObject);
-        Debug.Log("Ngỏm củ tỏi zồi");
-
-        Time.timeScale = 0f;
-        SceneManager.LoadSceneAsync(2);
-
-        // Tự huỷ sau khi âm thanh phát xong
-        Destroy(audioObj, overSound.length);
-    }
-
-    void OnEnable()
-    {
-        inputActions.Enable();
-    }
-
-    void OnDisable()
-    {
-        inputActions.Disable();
-    }
-
-    void Update()
-    {
-        MovePlayer();
-    }
-    public bool IsInvincible()
-    {
-        return Time.time - lastHitTime < invincibleDuration;
-    }
-
-    public float IsInvincibleTime()
-    {
-        return invincibleDuration - (Time.time - lastHitTime);
-    }
-
-    public void TakeDamage()
-    {
-        lastHitTime = Time.time;
-        // TODO: giảm máu, hiệu ứng, animation...
-    }
+    void Update() => MovePlayer();
 
     void MovePlayer()
     {
         Vector3 move = new Vector3(moveInput.x, moveInput.y, 0f);
         transform.position += move * speed * Time.deltaTime;
 
-        // clamp the player's position to the camera's viewport
         Vector3 clampedPosition = Camera.main.WorldToViewportPoint(transform.position);
         clampedPosition.x = Mathf.Clamp(clampedPosition.x, 0.05f, 0.95f);
         clampedPosition.y = Mathf.Clamp(clampedPosition.y, 0.05f, 0.95f);
         transform.position = Camera.main.ViewportToWorldPoint(clampedPosition);
     }
+
+    public void TakeDamage(int amount)
+    {
+        //if (IsInvincible()) return;
+
+        currentHealth -= amount;
+        currentHealth = Mathf.Max(currentHealth, 0);
+        heartUI.UpdateHealth(currentHealth);  // Slider
+
+        StartCoroutine(CameraShake.Instance.Shake(0.5f, 0.3f));
+        lastHitTime = Time.time;
+
+        if (currentHealth <= 0) GameOver();
+    }
+
+    public void Heal(int amount)
+    {
+        currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
+        heartUI.UpdateHealth(currentHealth);
+    }
+
+    public bool IsInvincible() => Time.time - lastHitTime < invincibleDuration;
 
     public void ActivateShield()
     {
@@ -143,7 +95,6 @@ public class PlayerController : MonoBehaviour
     {
         isInvincible = true;
         shield.SetActive(true);
-
         float elapsed = 0f;
         bool visible = true;
 
@@ -163,5 +114,20 @@ public class PlayerController : MonoBehaviour
         shield.SetActive(false);
         isInvincible = false;
     }
-}
 
+    public void GameOver()
+    {
+        GameObject audioObj = new GameObject("TempAudio");
+        AudioSource audio = audioObj.AddComponent<AudioSource>();
+        audio.clip = overSound;
+        audio.Play();
+        DontDestroyOnLoad(audioObj);
+
+        Destroy(GameObject.FindGameObjectWithTag("Player"));
+        Destroy(this.gameObject);
+
+        Time.timeScale = 0f;
+        SceneManager.LoadSceneAsync(2);
+        Destroy(audioObj, overSound.length);
+    }
+}
