@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      hp-slider_0: -1798883550424863305
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
