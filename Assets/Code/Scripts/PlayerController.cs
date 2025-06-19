@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    public int maxHealth = 50;
+    public int maxHealth;
     public int currentHealth = 100;
     public float speed = 10f;
     private Vector2 moveInput;
@@ -23,9 +23,29 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer pulse1Renderer;
     private SpriteRenderer pulse2Renderer;
     private PlayerInputActions inputActions;
+    
+    public static PlayerController Instance { get; private set; }
 
     void Awake()
     {
+        if (Instance && Instance != this)
+        {
+            Destroy(gameObject); // Đã có instance hợp lệ, không tạo thêm
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject); 
+        if (PlayerPrefs.GetInt("HasSaved", 0) == 1)
+        {
+            Debug.Log("Saved health: " + PlayerPrefs.GetInt("SavedHealth", 3));
+            currentHealth = PlayerPrefs.GetInt("SavedHealth", 3);
+        }
+        else
+        {
+            Debug.Log("No saved health data found, initializing with maxHealth.");
+            currentHealth = maxHealth; // Nếu không có dữ liệu lưu, khởi tạo với maxHealth
+        }
         SpriteRenderer = GetComponent<SpriteRenderer>();
         if (SkinManager.Instance != null)
             SpriteRenderer.sprite = SkinManager.Instance.GetCurrentSkin();
@@ -41,13 +61,18 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        currentHealth = maxHealth;
+        
         heartUI.SetMaxHealth(maxHealth);    // Cho thanh máu dạng slider
         heartUI.UpdateHealth(currentHealth);
     }
 
     void OnEnable() => inputActions.Enable();
-    void OnDisable() => inputActions.Disable();
+
+    void OnDisable()
+    {
+        if (inputActions != null)
+            inputActions.Disable();
+    }
 
     void Update() => MovePlayer();
 

@@ -1,12 +1,18 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager Instance;
 
-    public int score = 0;
+    public int score;
     public TextMeshProUGUI scoreText;
+
+    void Start()
+    {
+        UpdateScoreUI();
+    }
 
     void Awake()
     {
@@ -19,7 +25,11 @@ public class ScoreManager : MonoBehaviour
         {
             Destroy(gameObject); // tránh trùng lặp
         }
-
+        if (PlayerPrefs.GetInt("HasSaved", 0) == 1)
+        {
+            Debug.Log("Saved score: " + PlayerPrefs.GetInt("SavedScore", 9999));
+            score = PlayerPrefs.GetInt("SavedScore", 999);
+        }
     }
 
     public void AddScore(int amount)
