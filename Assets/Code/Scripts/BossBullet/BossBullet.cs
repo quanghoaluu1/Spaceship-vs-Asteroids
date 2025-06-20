@@ -55,7 +55,7 @@ public class BossBullet : MonoBehaviour
 
             if (playerController.IsInvincible())
             {
-                Debug.Log("Player đang bất tử, không mất máu. Còn " + playerController.IsInvincibleTime() + " giây.");
+                //Debug.Log("Player đang bất tử, không mất máu. Còn " + playerController.IsInvincibleTime() + " giây.");
                 Destroy(this.gameObject);
                 return;
             }
@@ -65,7 +65,7 @@ public class BossBullet : MonoBehaviour
             //Nếu đến đây là chắc chắn chưa bất tử → xử lý mất máu và kích hoạt khiên
             playerController.ActivateShield(); // Bật trạng thái bất tử + khiên + nhấp nháy
 
-            playerController.LoseLife();
+            //playerController.LoseLife();
             Destroy(this.gameObject);
         }
     }

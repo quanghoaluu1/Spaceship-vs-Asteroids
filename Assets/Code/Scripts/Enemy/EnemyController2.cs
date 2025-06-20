@@ -62,13 +62,13 @@ public class BossController : MonoBehaviour
 
             if (playerController.IsInvincible())
             {
-                Debug.Log("Player đang bất tử, không mất máu. Còn " + playerController.IsInvincibleTime() + " giây.");
+                //Debug.Log("Player đang bất tử, không mất máu. Còn " + playerController.IsInvincibleTime() + " giây.");
                 return;
             }
 
             playerController.ActivateShield(); // Bật trạng thái bất tử + khiên + nhấp nháy
 
-            playerController.LoseLife();
+            //playerController.LoseLife();
 
         }
 
