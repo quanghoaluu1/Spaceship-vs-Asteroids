@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 
 public class TimeManager : MonoBehaviour
@@ -20,6 +21,16 @@ public class TimeManager : MonoBehaviour
         {
             Destroy(gameObject); // tránh trùng lặp
         }
+        if (PlayerPrefs.GetInt("HasSaved", 0) == 1)
+        {
+            Debug.Log("Saved Time: " + PlayerPrefs.GetFloat("SavedTime", 9999));
+            elapsedTime = PlayerPrefs.GetFloat("SavedTime", 999);
+        }
+    }
+
+    private void Start()
+    {
+        UpdateTimeUI();
     }
 
     void Update()
