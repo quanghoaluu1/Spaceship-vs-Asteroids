@@ -110,11 +110,59 @@ public class InstantLaser : MonoBehaviour
                 Asteroid asteroid = hit.collider.GetComponent<Asteroid>();
                 if (asteroid != null && Time.time - asteroid.spawnTime >= asteroid.asteroidInvincibleTime)
                 {
+                    // Kiểm tra xem có đang miễn nhiễm không
+                    // if (Time.time - asteroid.spawnTime >= asteroid.asteroidInvincibleTime)
+                    // {
+                    //     // Gây sát thương hoặc phá hủy
+                    //     if (asteroid.size / 2f >= asteroid.minSize)
+                    //     {
+                    //         if (ScoreManager.Instance.score >= 20 && ScoreManager.Instance.score < 40)
+                    //         {
+                    //             asteroid.CreateSplit();
+                    //         }
+                    //         else if (ScoreManager.Instance.score >= 40)
+                    //         {
+                    //             asteroid.CreateSplit();
+                    //             asteroid.CreateSplit();
+                    //         }
+                    //     }
+
+                    //     if (ScoreManager.Instance != null)
+                    //     {
+                    //         ScoreManager.Instance.AddScore(1);
+                    //     }
+                    //     else
+                    //     {
+                    //         Debug.LogWarning("ScoreManager.Instance == null");
+                    //     }
+
+                    //     Instantiate(asteroid.explosionPrefab, asteroid.transform.position, Quaternion.identity);
+                    //     Destroy(asteroid.gameObject);
+                    // }
                     asteroid.TakeLaserDamage();
                 }
                 else
                 {
                     Debug.Log("Asteroid vừa spawn, chưa nhận sát thương từ laser.");
+                }
+            }
+
+            if (hit.collider.CompareTag("EnemySpaceship"))
+            {
+                EnemyController enemy = hit.collider.GetComponent<EnemyController>();
+                if (enemy != null)
+                {
+                    //enemy.TakeDamage(1);
+                    Destroy(enemy.gameObject);
+                }
+            }
+            if (hit.collider.CompareTag("Boss"))
+            {
+                BossController boss = hit.collider.GetComponent<BossController>();
+                if (boss != null)
+                {
+                    boss.Die();
+                    Destroy(boss.gameObject);
                 }
             }
         }
