@@ -7,6 +7,7 @@ TagManager:
   - LaserShot
   - Asteroid
   - Star
+  - PowerUp
   layers:
   - Default
   - TransparentFX
@@ -18,7 +19,7 @@ TagManager:
   - Asteroid
   - LaserShot
   - Player
-  - 
+  - PowerUp
   - 
   - 
   - 

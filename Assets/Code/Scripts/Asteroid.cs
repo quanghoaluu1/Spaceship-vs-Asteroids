@@ -23,6 +23,11 @@ public class Asteroid : MonoBehaviour
     public int maxHealth = 3;
     private int currentHealth;
 
+    /// Thông số để xác định xác suất rơi vật phẩm
+    public GameObject[] powerUpPrefabs;
+    [Range(0f, 1f)]
+    public float dropChance = 0.2f;  
+
     private void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -118,6 +123,10 @@ public class Asteroid : MonoBehaviour
         if (currentHealth <= 0)
         {
             Debug.Log("Asteroid bị phá hủy do hết máu.");
+            if (size >= 1f)
+            {
+                TryDropPowerUp(); // Chỉ thiên thạch lớn mới có thể rơi
+            }
             if (size / 2f >= minSize)
             {
                 if (ScoreManager.Instance.score >= 20 && ScoreManager.Instance.score < 40)
@@ -183,5 +192,27 @@ public class Asteroid : MonoBehaviour
         aSource.Play();
 
         Destroy(tempGO, clip.length);
+    }
+
+    // Hàm này sẽ được gọi để thử rơi vật phẩm khi thiên thạch bị phá hủy
+    private void TryDropPowerUp()
+    {
+        if (powerUpPrefabs.Length == 0) return;
+
+        if (Random.value < dropChance)
+        {
+            int index = Random.Range(0, powerUpPrefabs.Length);
+            GameObject selectedPowerUp = powerUpPrefabs[index];
+            Instantiate(selectedPowerUp, transform.position, Quaternion.identity);
+        }
+    }
+
+    public void DestroyInstantly()
+    {
+        if (this == null || gameObject == null) return;
+
+        ScoreManager.Instance?.AddScore(size >= 1f ? 2 : 1);
+        Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        Destroy(gameObject);
     }
 }
