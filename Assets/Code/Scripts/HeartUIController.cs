@@ -13,6 +13,7 @@ public class HeartUIController : MonoBehaviour
 
     public void UpdateHealth(int currentHealth)
     {
+        Debug.Log(currentHealth);
         healthSlider.value = currentHealth;
     }
 }
