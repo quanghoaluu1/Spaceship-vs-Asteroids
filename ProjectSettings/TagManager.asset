@@ -12,6 +12,8 @@ TagManager:
   - EnemyBullet
   - BossBullet
   - Boss
+  - LazerShooter
+  - PlasmaBall
   layers:
   - Default
   - TransparentFX

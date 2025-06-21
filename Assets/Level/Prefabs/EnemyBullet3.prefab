@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 7283099583566508820}
   - component: {fileID: 1035426703559246585}
   - component: {fileID: 3159403288796327089}
-  - component: {fileID: 5042642778536162705}
+  - component: {fileID: 400982504988873929}
   m_Layer: 12
   m_Name: EnemyBullet3
-  m_TagString: BossBullet
+  m_TagString: LazerShooter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -8812246010333443997, guid: 8b877d28580fb9846846cd417df4623e, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.4666667, g: 0.8588236, b: 0.9921569, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -163,7 +163,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &5042642778536162705
+--- !u!114 &400982504988873929
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -172,6 +172,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 3406412105874883713}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4303febc3cdf80e46bd9c2acf0a79e87, type: 3}
+  m_Script: {fileID: 11500000, guid: 89a6fdd86ef5e2342ad12b5b9b8383d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 10
+  lifetime: 5
