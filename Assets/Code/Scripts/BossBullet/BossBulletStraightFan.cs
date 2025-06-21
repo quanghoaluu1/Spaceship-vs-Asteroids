@@ -1,30 +1,35 @@
 ﻿using UnityEngine;
 
-public class LaserBullet : MonoBehaviour
+public class BossBulletStraightFan : MonoBehaviour
 {
-    public float speed = 10f;
-    //public float lifetime = 5f;
-
     private Vector2 direction;
+    private float speed = 8f;
 
     public void SetDirection(Vector2 dir)
     {
         direction = dir.normalized;
-        GetComponent<Rigidbody2D>().linearVelocity = direction * speed;
     }
 
-    void OnBecameInvisible()
+    void Update()
     {
-        Destroy(gameObject);
-    }
+        transform.position += (Vector3)(direction * speed * Time.deltaTime);
 
+        // Huỷ nếu ra ngoài màn hình
+        Vector2 min = Camera.main.ViewportToWorldPoint(Vector2.zero);
+        Vector2 max = Camera.main.ViewportToWorldPoint(Vector2.one);
+        if (transform.position.x < min.x || transform.position.x > max.x ||
+            transform.position.y < min.y || transform.position.y > max.y)
+        {
+            Destroy(gameObject);
+        }
+    }
     public void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
             PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
             if (playerController == null) return;
-            //Class này đã bị bỏ, nhưng đừng xóa nó!!!
+
 
             if (playerController.IsInvincible())
             {

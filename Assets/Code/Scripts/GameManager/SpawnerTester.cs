@@ -2,40 +2,50 @@
 
 public class SpawnerTester : MonoBehaviour
 {
-    public GameObject bossPrefab;              // Prefab của boss 3
-    public Transform bossSpawnPoint;           // Điểm spawn
-    public GameObject spawnEffectPrefab;       // Hiệu ứng khi spawn (tùy chọn)
+    public GameObject boss3Prefab;           // Prefab của Boss 3
+    public Transform bossSpawnPoint;         // Vị trí spawn (gán trong Inspector)
+    public float moveDistance = 6f;          // Khoảng cách boss di chuyển vào màn hình
+    public float moveDuration = 2f;          // Thời gian boss di chuyển vào màn hình
+    public Vector3 bossScaleMultiplier = new Vector3(1.2f, 1.2f, 1.2f); // Scale tăng lên
 
-    private GameObject currentBoss;
+    private GameObject spawnedBoss;
 
-    void Update()
+    void Start()
     {
-        // Nhấn phím B để triệu hồi boss
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            SpawnBoss();
-        }
+        SpawnBoss3();
     }
 
-    void SpawnBoss()
+    void SpawnBoss3()
     {
-        if (bossPrefab == null || bossSpawnPoint == null)
+        if (boss3Prefab == null || bossSpawnPoint == null)
         {
-            Debug.LogWarning("Thiếu prefab hoặc điểm spawn");
+            Debug.LogWarning("Thiếu prefab hoặc BossSpawnPoint");
             return;
         }
 
-        // Hiệu ứng spawn nếu có
-        if (spawnEffectPrefab != null)
+        // Spawn boss tại vị trí ngoài màn hình (bên phải một chút)
+        Vector3 spawnPosition = bossSpawnPoint.position + new Vector3(moveDistance, 0f, 0f);
+        spawnedBoss = Instantiate(boss3Prefab, spawnPosition, bossSpawnPoint.rotation);
+
+        // Tăng scale
+        spawnedBoss.transform.localScale = Vector3.Scale(spawnedBoss.transform.localScale, bossScaleMultiplier);
+
+        // Di chuyển vào vị trí BossSpawnPoint trong moveDuration giây
+        StartCoroutine(MoveToPosition(spawnedBoss.transform, bossSpawnPoint.position, moveDuration));
+    }
+
+    System.Collections.IEnumerator MoveToPosition(Transform objTransform, Vector3 targetPosition, float duration)
+    {
+        Vector3 startPos = objTransform.position;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
         {
-            Instantiate(spawnEffectPrefab, bossSpawnPoint.position, Quaternion.identity);
+            objTransform.position = Vector3.Lerp(startPos, targetPosition, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
         }
 
-        // Triệu hồi boss và phóng to
-        currentBoss = Instantiate(bossPrefab, bossSpawnPoint.position, Quaternion.identity);
-        currentBoss.transform.localScale *= 1.3f;
-
-        // (Optional) Có thể add animation hoặc effect nữa tại đây
-        Debug.Log("Boss đã được triệu hồi!");
+        objTransform.position = targetPosition;
     }
 }

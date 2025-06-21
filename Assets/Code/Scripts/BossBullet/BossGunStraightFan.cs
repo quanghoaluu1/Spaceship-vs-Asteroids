@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BossGunStraight : MonoBehaviour
+public class BossGunStraightFan : MonoBehaviour
 {
     public GameObject bulletPrefab;
     private float fireRate = 1.5f;
@@ -41,7 +41,7 @@ public class BossGunStraight : MonoBehaviour
     {
         GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
 
-        BossBulletStraight bulletScript = bullet.GetComponent<BossBulletStraight>();
+        BossBulletStraightFan bulletScript = bullet.GetComponent<BossBulletStraightFan>();
         if (bulletScript != null)
         {
             bulletScript.SetDirection(direction);

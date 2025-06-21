@@ -16,37 +16,90 @@ public class Boss3 : MonoBehaviour
     public float fanAngle = 60f; // tổng góc xoè
     public float fireFanDelay = 2f; // thời gian đợi trước khi bắn fan
     public float plasmaBallCooldown = 6f;
-    private float plasmaBallTimer = 0f;
+    //private float plasmaBallTimer = 0f;
 
+    public GameObject bossStraightBulletPrefab;
+    public Transform firePoint1;
+    public Transform firePoint2;
+    public float straightBulletSpeed = 8f;
+    public int bulletBurstCount = 10;
+    //private float straightFireCooldown = 5f;
+    //private float straightFireTimer = 0f;
+    private bool canFireStraight = true; // để chặn spam
 
-    private bool isFiring = false;
+    //private bool isFiring = false;
 
-    void Update()
+    void Awake()
     {
-        // LaserShooter tự động theo Coroutine
-        LaserShooters();
-
-        // PlasmaBall: tự cooldown theo timer
-        plasmaBallTimer += Time.deltaTime;
-        if (plasmaBallTimer >= plasmaBallCooldown)
+        if (player == null)
         {
-            plasmaBallTimer = 0f;
+            GameObject foundPlayer = GameObject.FindWithTag("Player");
+            if (foundPlayer != null)
+                player = foundPlayer.transform;
+        }
+    }
+    void Start()
+    {
+        StartCoroutine(BossAttackLoop());
+    }
+
+    //void Update()
+    //{
+    //    LaserShooters();
+
+    //    plasmaBallTimer += Time.deltaTime;
+    //    if (plasmaBallTimer >= plasmaBallCooldown)
+    //    {
+    //        plasmaBallTimer = 0f;
+    //        PlasmaBall();
+    //    }
+
+    //    if (canFireStraight)
+    //    {
+    //        StartDualStraightFire();
+    //    }
+    //}
+    IEnumerator BossAttackLoop()
+    {
+        while (true)
+        {
+            // 1. Bắn laser
+            yield return StartCoroutine(LaserShooterPattern());
+
+            // Chờ 0.3s sau khi laser xong
+            yield return new WaitForSeconds(0.3f);
+
+            // 2. Bắn đạn thẳng đôi
+            yield return StartCoroutine(FireDualStraightBullets());
+
+            // Chờ 0.3s sau khi đạn thẳng xong
+            yield return new WaitForSeconds(0.3f);
+
+            // 3. Bắn plasma
             PlasmaBall();
+
+            // Chờ 0.5s rồi tiếp tục vòng mới
+            yield return new WaitForSeconds(0.5f);
+
+            // 🔁 Cooldown cho toàn bộ chu kỳ (thay vì để trong LaserShooterPattern)
+            //yield return new WaitForSeconds(LazerShooterCooldown);
         }
     }
 
-    public void LaserShooters()
-    {
-        if (!isFiring)
-        {
-            isFiring = true;
-            StartCoroutine(LaserShooterPattern());
-        }
-    }
+
+
+    //public void LaserShooters()
+    //{
+    //    if (!isFiring)
+    //    {
+    //        isFiring = true;
+    //        StartCoroutine(LaserShooterPattern());
+    //    }
+    //}
 
     public void PlasmaBall()
     {
-        FireFanBullets(5);
+        FireFanPlasmaBall(5);
     }
 
 
@@ -94,9 +147,9 @@ public class Boss3 : MonoBehaviour
         }
 
         // --- Cooldown ---
-        yield return new WaitForSeconds(LazerShooterCooldown);
+        //yield return new WaitForSeconds(LazerShooterCooldown);
 
-        isFiring = false; // Cho phép lặp lại nếu muốn
+        //isFiring = false; // Cho phép lặp lại nếu muốn
     }
 
     IEnumerator SpawnAndShoot(int startIndex, int count, List<GameObject> result)
@@ -136,7 +189,7 @@ public class Boss3 : MonoBehaviour
         }
     }
 
-    void FireFanBullets(int bulletCount)
+    void FireFanPlasmaBall(int bulletCount)
     {
         float startAngle = -fanAngle / 2f;
         float angleStep = fanAngle / (bulletCount - 1);
@@ -157,5 +210,40 @@ public class Boss3 : MonoBehaviour
         }
     }
 
+    public void StartDualStraightFire()
+    {
+        if (canFireStraight)
+        {
+            StartCoroutine(FireDualStraightBullets());
+        }
+    }
+
+    IEnumerator FireDualStraightBullets()
+    {
+        canFireStraight = false;
+
+        int totalShots = 10;
+        float shotInterval = 0.3f;
+
+        for (int i = 0; i < totalShots; i++)
+        {
+            FireBulletFrom(firePoint1);
+            FireBulletFrom(firePoint2);
+            yield return new WaitForSeconds(shotInterval);
+        }
+
+        // Cooldown sau khi bắn xong
+        //yield return new WaitForSeconds(5f);
+
+        canFireStraight = true;
+    }
+
+    void FireBulletFrom(Transform firePoint)
+    {
+        GameObject bullet = Instantiate(bossStraightBulletPrefab, firePoint.position, Quaternion.identity);
+        var bulletScript = bullet.GetComponent<BossBulletStraight>();
+        bulletScript.SetDirection(Vector2.left);
+        bulletScript.SetSpeed(straightBulletSpeed);
+    }
 
 }
