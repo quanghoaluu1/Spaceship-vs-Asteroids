@@ -62,9 +62,13 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        
-        heartUI.SetMaxHealth(maxHealth);    // Cho thanh máu dạng slider
-        heartUI.UpdateHealth(currentHealth);
+        if (heartUI == null)
+        {
+            heartUI = FindObjectOfType<HeartUIController>();
+        }
+
+        heartUI?.SetMaxHealth(maxHealth);
+        heartUI?.UpdateHealth(currentHealth);
     }
 
     void OnEnable() => inputActions.Enable();
