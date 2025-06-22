@@ -19,7 +19,7 @@ public class ScoreManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // 👈 dòng này để giữ lại object khi chuyển scene
+            DontDestroyOnLoad(gameObject); // dòng này để giữ lại object khi chuyển scene
         }
         else
         {
