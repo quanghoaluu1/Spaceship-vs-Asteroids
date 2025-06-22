@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Drawing;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -24,7 +25,11 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer pulse1Renderer;
     private SpriteRenderer pulse2Renderer;
     private PlayerInputActions inputActions;
-    
+    private float baseSpeed;
+    private Coroutine speedBoostRoutine;
+    public GameObject bombEffectPrefab;
+    private Coroutine shieldRoutine;
+
     public static PlayerController Instance { get; private set; }
 
     void Awake()
@@ -90,7 +95,7 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
-        //if (IsInvincible()) return;
+        // if (IsInvincible()) return;
 
         currentHealth -= amount;
         currentHealth = Mathf.Max(currentHealth, 0);
@@ -109,8 +114,8 @@ public class PlayerController : MonoBehaviour
         heartUI.UpdateHealth(currentHealth);
     }
 
-    public bool IsInvincible() => Time.time - lastHitTime < invincibleDuration;
-
+    //public bool IsInvincible() => Time.time - lastHitTime < invincibleDuration;
+    public bool IsInvincible() => isInvincible;
     public void ActivateShield()
     {
         if (isInvincible) return;
@@ -124,7 +129,7 @@ public class PlayerController : MonoBehaviour
         shield.SetActive(true);
         float elapsed = 0f;
         bool visible = true;
-
+    
         while (elapsed < invincibleDuration)
         {
             visible = !visible;
@@ -134,7 +139,7 @@ public class PlayerController : MonoBehaviour
             elapsed += 0.2f;
             yield return new WaitForSeconds(0.2f);
         }
-
+    
         pulse1Renderer.enabled = true;
         pulse2Renderer.enabled = true;
         SpriteRenderer.enabled = true;
@@ -172,4 +177,85 @@ public class PlayerController : MonoBehaviour
 
         Destroy(tempGO, clip.length);
     }
+
+    // Buff tăng tốc
+    public void ApplySpeedBoost(float duration, float multiplier)
+    {
+        if (speedBoostRoutine != null)
+            StopCoroutine(speedBoostRoutine);
+        speedBoostRoutine = StartCoroutine(SpeedBoost(duration, multiplier));
+    }
+
+    private IEnumerator SpeedBoost(float duration, float multiplier)
+    {
+        float originalSpeed = speed;
+        speed = originalSpeed * multiplier;
+        Debug.Log($"⚡ Speed Boost Activated: {speed}");
+
+        yield return new WaitForSeconds(duration);
+
+        speed = originalSpeed;
+        Debug.Log($"⚡ Speed Boost Ended: {speed}");
+    }
+
+    //Bom nổ
+
+    public void ApplyEffect()
+    {
+        TriggerBomb();
+
+        if (bombEffectPrefab != null)
+        {
+            Vector3 explosionPosition = transform.position;
+            explosionPosition.z = 0f;
+
+            GameObject effect = Instantiate(bombEffectPrefab, explosionPosition, Quaternion.identity);
+            Destroy(effect, 0.5f); 
+        }
+    }
+    public void TriggerBomb()
+    {
+        StartCoroutine(ExplodeAllAsteroids());
+    }
+
+    private IEnumerator ExplodeAllAsteroids()
+    {
+        GameObject[] asteroids = GameObject.FindGameObjectsWithTag("Asteroid");
+
+        foreach (GameObject asteroidObj in asteroids)
+        {
+            if (asteroidObj == null || !asteroidObj.activeInHierarchy) continue;
+
+            Asteroid asteroid = asteroidObj.GetComponent<Asteroid>();
+            if (asteroid != null)
+            {
+                asteroid.DestroyInstantly();
+                yield return new WaitForSeconds(0.05f); 
+            }
+        }
+    }
+
+    // Kích hoạt khiên
+    public void ActivateShieldNoBlink()
+    {
+        if (shieldRoutine != null)
+        {
+            StopCoroutine(shieldRoutine);
+        }
+
+        isInvincible = true;
+        shield.SetActive(true);
+        shieldRoutine = StartCoroutine(DisableShieldAfterDelay(invincibleDuration));
+    }
+
+    private IEnumerator DisableShieldAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        shield.SetActive(false);
+        isInvincible = false;
+    }
+
+
+
+
 }

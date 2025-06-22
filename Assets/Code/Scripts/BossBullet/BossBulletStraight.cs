@@ -40,7 +40,7 @@ public class BossBulletStraight : MonoBehaviour
             //PlaySoundAtPosition(getHitSound, transform.position, 5f);
 
             //Nếu đến đây là chắc chắn chưa bất tử → xử lý mất máu và kích hoạt khiên
-            playerController.ActivateShield(); // Bật trạng thái bất tử + khiên + nhấp nháy
+            //playerController.ActivateShield(); // Bật trạng thái bất tử + khiên + nhấp nháy
 
             playerController.TakeDamage(20);
             Destroy(this.gameObject);

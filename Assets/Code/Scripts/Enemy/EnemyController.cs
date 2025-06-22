@@ -5,14 +5,25 @@ public class EnemyController : MonoBehaviour
 {
     public float speed = 3f;
     public Vector2 moveDirection = Vector2.left;
+    
+    public int maxHealth = 3;
+    private int currentHealth;
 
     private Rigidbody2D rb;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        currentHealth = maxHealth;
     }
-
+    public void TakeDamage(int amount)
+    {
+        currentHealth -= amount;
+        if (currentHealth <= 0)
+        {
+            Destroy(this.gameObject);
+        }
+    }
     void FixedUpdate()
     {
         rb.MovePosition(rb.position + moveDirection.normalized * speed * Time.fixedDeltaTime);
@@ -33,8 +44,7 @@ public class EnemyController : MonoBehaviour
                 return;
             }
 
-            playerController.ActivateShield(); // Bật trạng thái bất tử + khiên + nhấp nháy
-
+            //playerController.ActivateShield(); // Bật trạng thái bất tử + khiên + nhấp nháy
             playerController.TakeDamage(20);
             Destroy(this.gameObject);
         }

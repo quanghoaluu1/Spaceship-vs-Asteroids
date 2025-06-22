@@ -16,6 +16,7 @@ TagManager:
   - PlasmaBall
   - BossTwo
   - Boss3
+  - PowerUp
   layers:
   - Default
   - TransparentFX
@@ -31,8 +32,8 @@ TagManager:
   - ObjectCleaner
   - EnemyBullet
   - Boss
-  - 
-  - 
+  - PowerUp
+  - UIPowerUp
   - 
   - 
   - 
