@@ -33,7 +33,7 @@ public class EnemyController : MonoBehaviour
                 return;
             }
 
-            playerController.ActivateShield(); // Bật trạng thái bất tử + khiên + nhấp nháy
+            //playerController.ActivateShield(); // Bật trạng thái bất tử + khiên + nhấp nháy
 
             playerController.TakeDamage(20);
             Destroy(this.gameObject);

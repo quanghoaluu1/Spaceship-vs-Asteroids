@@ -117,7 +117,7 @@ public class Asteroid : MonoBehaviour
 
             Debug.Log("Player bị thiên thạch đâm!");
             // PlaySoundAtPosition(getHitSound, transform.position, 5f);
-            playerController.ActivateShield();
+            //playerController.ActivateShield();
 
             int damage = size >= 1f ? 10 : 5;
 

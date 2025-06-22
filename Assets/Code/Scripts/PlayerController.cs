@@ -95,7 +95,7 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
-        if (IsInvincible()) return;
+        // if (IsInvincible()) return;
 
         currentHealth -= amount;
         currentHealth = Mathf.Max(currentHealth, 0);
@@ -114,8 +114,8 @@ public class PlayerController : MonoBehaviour
         heartUI.UpdateHealth(currentHealth);
     }
 
-    public bool IsInvincible() => Time.time - lastHitTime < invincibleDuration;
-
+    //public bool IsInvincible() => Time.time - lastHitTime < invincibleDuration;
+    public bool IsInvincible() => isInvincible;
     public void ActivateShield()
     {
         if (isInvincible) return;
@@ -129,7 +129,7 @@ public class PlayerController : MonoBehaviour
         shield.SetActive(true);
         float elapsed = 0f;
         bool visible = true;
-
+    
         while (elapsed < invincibleDuration)
         {
             visible = !visible;
@@ -139,7 +139,7 @@ public class PlayerController : MonoBehaviour
             elapsed += 0.2f;
             yield return new WaitForSeconds(0.2f);
         }
-
+    
         pulse1Renderer.enabled = true;
         pulse2Renderer.enabled = true;
         SpriteRenderer.enabled = true;
