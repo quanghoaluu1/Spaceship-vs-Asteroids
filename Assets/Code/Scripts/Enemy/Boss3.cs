@@ -1,9 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static BossController;
 
 public class Boss3 : MonoBehaviour
 {
+    public int maxHealth = 200;
+    private int currentHealth;
+    public delegate void Boss3DefeatedHandler();
+    public event Boss3DefeatedHandler OnBoss3Defeated;
+
     public GameObject lazerShooterPrefab;
     public Transform player;
     public Transform[] spawnPoints; // 6 vị trí spawn
@@ -55,6 +61,8 @@ public class Boss3 : MonoBehaviour
     void Start()
     {
         CalculateColliderHalfHeight();
+        currentHealth = maxHealth;
+
         StartCoroutine(BossAttackLoop());
     }
 
@@ -368,4 +376,39 @@ public class Boss3 : MonoBehaviour
         else if (gunIndex == 2) canShootSpecial2 = true;
     }
 
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
+            if (playerController == null) return;
+
+
+            if (playerController.IsInvincible())
+            {
+                //Debug.Log("Player đang bất tử, không mất máu. Còn " + playerController.IsInvincibleTime() + " giây.");
+                return;
+            }
+
+            playerController.TakeDamage(100);
+
+        }
+
+        if (collision.gameObject.CompareTag("Asteroid"))
+        {
+            // Xóa thiên thạch
+            Destroy(collision.gameObject);
+        }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+
+        if (currentHealth <= 0)
+        {
+            OnBoss3Defeated?.Invoke(); // báo về InfiniteModeManager
+            Destroy(gameObject);       // huỷ boss
+        }
+    }
 }

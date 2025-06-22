@@ -91,6 +91,8 @@ public class LaserBeam : MonoBehaviour
                 playerController.ActivateShield();
             }
 
+            playerController.TakeDamage(30);
+
             hasHitPlayer = true;
             // Nếu muốn tia biến mất ngay khi va chạm:
             //Destroy(gameObject);

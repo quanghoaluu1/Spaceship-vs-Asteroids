@@ -7,7 +7,9 @@ public class InfiniteModeManager : MonoBehaviour
     public Asteroid asteroidPrefab;
     public EnemyController enemyPrefab1;
     public EnemyController enemyPrefab2;
-    public GameObject bossPrefab;
+    public GameObject bossPrefab1;
+    public GameObject bossPrefab2;
+    private int bossSpawnCount = 0;
     public Transform bossSpawnPoint;
 
     private int bossSpawnRequirement = 50; // điểm số yêu cầu để spawn boss
@@ -19,6 +21,11 @@ public class InfiniteModeManager : MonoBehaviour
     private Coroutine spawnRoutine;
     private int currentTotalScore = 0;
     private bool isBossAlive = false;
+
+    public float bossMoveDistance = 6f;
+    public float bossMoveDuration = 2f;
+    public Transform boss3SpawnPoint;
+    public Vector3 bossScaleMultiplier = new Vector3(2.5f, 2.5f, 1f);
 
     private enum GameMode
     {
@@ -170,33 +177,63 @@ public class InfiniteModeManager : MonoBehaviour
         asteroid.SetTrajectory(Vector2.left);
     }
 
-    void SpawnEnemy(EnemyController prefab, Vector3 scale)
-    {
-        float randomY = Random.Range(0f, 1f);
-        Vector3 spawnPoint = Camera.main.ViewportToWorldPoint(new Vector3(1f, randomY, 0f));
-        spawnPoint.z = 0f;
-
-        EnemyController enemy = Instantiate(prefab, spawnPoint, Quaternion.identity);
-        enemy.transform.localScale = scale;
-    }
-
     void SpawnBoss()
     {
         isBossAlive = true;
 
-        // Lùi trái 6f so với bossSpawnPoint
-        Vector3 spawnPosition = bossSpawnPoint != null
-            ? bossSpawnPoint.position - Vector3.left * 4f
-            : Vector3.left * 6f;
+        // 🌟 Luân phiên chọn boss
+        GameObject bossToSpawn = (bossSpawnCount % 2 == 0) ? bossPrefab1 : bossPrefab2;
 
-        currentBoss = Instantiate(bossPrefab, spawnPosition, Quaternion.identity);
+        // === Nếu là Boss3 ===
+        if (bossToSpawn == bossPrefab2 && boss3SpawnPoint != null)
+        {
+            Vector3 spawnFrom = boss3SpawnPoint.position + Vector3.right * bossMoveDistance;
+            currentBoss = Instantiate(bossToSpawn, spawnFrom, boss3SpawnPoint.rotation);
 
+            // Scale lớn hơn (nếu muốn)
+            currentBoss.transform.localScale = Vector3.Scale(currentBoss.transform.localScale, bossScaleMultiplier);
+
+            // Di chuyển vào vị trí
+            StartCoroutine(MoveToPosition(currentBoss.transform, boss3SpawnPoint.position, bossMoveDuration));
+        }
+        // === Các boss khác ===
+        else if (bossSpawnPoint != null)
+        {
+            Vector3 spawnFrom = bossSpawnPoint.position;
+            currentBoss = Instantiate(bossToSpawn, spawnFrom, bossSpawnPoint.rotation);
+        }
+
+        // Kết nối sự kiện bị tiêu diệt
         BossController bossController = currentBoss.GetComponent<BossController>();
         if (bossController != null)
         {
             bossController.OnBossDefeated += HandleBossDefeated;
         }
+
+        // Nếu là Boss3 thì nghe Boss3Defeated
+        Boss3 boss3 = currentBoss.GetComponent<Boss3>();
+        if (boss3 != null)
+        {
+            boss3.OnBoss3Defeated += HandleBossDefeated;
+        }
+
+        bossSpawnCount++;
     }
+
+    IEnumerator MoveToPosition(Transform objTransform, Vector3 targetPosition, float duration)
+        {
+            Vector3 startPos = objTransform.position;
+            float elapsed = 0f;
+
+            while (elapsed < duration)
+            {
+                objTransform.position = Vector3.Lerp(startPos, targetPosition, elapsed / duration);
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+
+            objTransform.position = targetPosition;
+        }
 
     public void HandleBossDefeated()
     {

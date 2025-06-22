@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6775334142185866175}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BulletOuterPos2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8869008791691502186}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SpecialGun1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2147291486454134245}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: XBullet (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,7 +102,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6311049280437904302}
-  m_Layer: 14
+  m_Layer: 10
   m_Name: LazerShooterPos6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,7 +133,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1385514631150767586}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: LazerShooterPos5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,7 +164,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3000563884829147025}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: XBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -195,7 +195,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3284193728819749666}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: LaserShooterPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -232,7 +232,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3068076544318479774}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SpecialGun3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -263,7 +263,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7680043234142603276}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: LazerShooterPos2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -294,7 +294,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 429208382034075095}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: LazerShooterPos3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -325,7 +325,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6461129081158291308}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SpecialGun4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -356,7 +356,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5513988864800160485}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PlasmaBallFirepoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -387,7 +387,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5645497413317991110}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: LazerShooterPos4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -418,7 +418,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6638012753091948983}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BulletOuterPos1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -449,7 +449,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9055200057033251304}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: LazerShooterPos1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -480,7 +480,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8352453342586845253}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SpecialGunPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -515,7 +515,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4073878464375235176}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SpecialGun2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -550,9 +550,9 @@ GameObject:
   - component: {fileID: 1800327364235076946}
   - component: {fileID: 5989078683996291642}
   - component: {fileID: 1987098933590048486}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Boss6
-  m_TagString: Boss
+  m_TagString: Boss3
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -639,7 +639,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8718167298030640652}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -831,6 +831,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86409cfe23544664e9d537f094e0bb54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 300
   lazerShooterPrefab: {fileID: 3361481792713354509, guid: 05f7017a1811d1e44b2df445b1e05bbb, type: 3}
   player: {fileID: 0}
   spawnPoints:
@@ -874,7 +875,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3150021267313258984}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: StraightBulletOuterPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}

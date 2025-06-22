@@ -37,14 +37,13 @@ public class SpinningBullet : MonoBehaviour
 
             if (playerController.IsInvincible())
             {
-                //Debug.Log("Player đang bất tử, không mất máu. Còn " + playerController.IsInvincibleTime() + " giây.");
                 Destroy(this.gameObject);
                 return;
             }
 
             //PlaySoundAtPosition(getHitSound, transform.position, 5f);
 
-            //Nếu đến đây là chắc chắn chưa bất tử → xử lý mất máu và kích hoạt khiên
+            playerController.TakeDamage(50); // Gọi hàm mất máu, nếu có
             playerController.ActivateShield(); // Bật trạng thái bất tử + khiên + nhấp nháy
 
             //playerController.LoseLife();
