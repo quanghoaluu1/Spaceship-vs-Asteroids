@@ -7,11 +7,6 @@ TagManager:
   - LaserShot
   - Asteroid
   - Star
-  - ObjectCleaner
-  - EnemySpaceship
-  - EnemyBullet
-  - BossBullet
-  - Boss
   layers:
   - Default
   - TransparentFX
@@ -23,10 +18,10 @@ TagManager:
   - Asteroid
   - LaserShot
   - Player
-  - Enemy
-  - ObjectCleaner
-  - EnemyBullet
-  - Boss
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 

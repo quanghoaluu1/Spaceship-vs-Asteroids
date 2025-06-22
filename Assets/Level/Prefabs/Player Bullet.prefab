@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7919174918986293107}
   - component: {fileID: 6287026745405689564}
   - component: {fileID: -3809958044107090832}
-  - component: {fileID: 6518687894781630916}
   - component: {fileID: 1149643701097331683}
   m_Layer: 0
   m_Name: Player Bullet
@@ -97,7 +96,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7990571997050752753}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -136,62 +135,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.63, y: 0.32}
   m_EdgeRadius: 0
---- !u!60 &6518687894781630916
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7990571997050752753}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.63, y: 0.32}
-    newSize: {x: 0.63, y: 0.32}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -0.024999999, y: 0.07}
-      - {x: -0.315, y: 0.04}
-      - {x: -0.315, y: -0.03}
-      - {x: -0.285, y: -0.07}
-      - {x: -0.035, y: -0.089999996}
-      - {x: 0.265, y: -0.089999996}
-      - {x: 0.295, y: -0.03}
-      - {x: 0.295, y: 0.049999997}
-      - {x: 0.275, y: 0.07}
-  m_UseDelaunayMesh: 0
 --- !u!114 &1149643701097331683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,4 +150,3 @@ MonoBehaviour:
   bulletPrefab: {fileID: 7990571997050752753}
   firePoint: {fileID: 0}
   bulletSpeed: 10
-  laserSound: {fileID: 0}

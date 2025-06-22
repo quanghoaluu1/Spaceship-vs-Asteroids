@@ -5,8 +5,10 @@ using Random = UnityEngine.Random;
 public class StarSpawn : MonoBehaviour
 {
     public Star starPrefab;
-    private float spawnRate = 5f;
-    private int spawnAmount = 1;
+    public float trajectoryVariance = 15f;
+    public float spawnRate = 5f;
+    public float spawnDistance = 15f;
+    public int spawnAmount = 1;
 
     private void Start()
     {
@@ -15,15 +17,6 @@ public class StarSpawn : MonoBehaviour
 
     private void Spawn()
     {
-        if (ScoreManager.Instance.score >= 80)
-        {
-            spawnAmount = 2; // Increase spawn rate if score >= 80
-        }
-        else if (ScoreManager.Instance.score >= 40)
-        {
-            spawnRate = 4f; // Increase spawn amount if score >= 40
-        }
-
         for (int i = 0; i < spawnAmount; i++)
         {
             float randomY = Random.Range(0f, 1f);
