@@ -247,12 +247,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreText: {fileID: 1818001389}
   timeText1: {fileID: 867310143}
-  nameInput: {fileID: 0}
-  submitButton: {fileID: 0}
-  leaderboardPanel: {fileID: 0}
-  leaderboardEntryPrefab: {fileID: 0}
-  leaderboardContainer: {fileID: 0}
-  leaderboardManager: {fileID: 0}
+  nameInput: {fileID: 226057205}
+  submitButton: {fileID: 754441118}
+  leaderboardPanel: {fileID: 330961862}
+  leaderboardEntryPrefab: {fileID: 1016732248425819345, guid: dd335f62ae5bb1041857b10c41810b37, type: 3}
+  leaderboardContainer: {fileID: 1867858115}
+  leaderboardManager: {fileID: 1253274793}
 --- !u!1 &205497298
 GameObject:
   m_ObjectHideFlags: 0
@@ -898,8 +898,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: -5897110525475430604, guid: 2a24a9f0af41a1f438aae87ff45e257f, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
