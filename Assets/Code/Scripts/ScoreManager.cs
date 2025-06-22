@@ -24,7 +24,7 @@ public class ScoreManager : MonoBehaviour
 
         if (PlayerPrefs.GetInt("HasSaved", 0) == 1)
         {
-            Debug.Log("Saved score: " + PlayerPrefs.GetInt("SavedScore", 9999));
+            //Debug.Log("Saved score: " + PlayerPrefs.GetInt("SavedScore", 9999));
             score = PlayerPrefs.GetInt("SavedScore", 999);
         }
     }
@@ -68,11 +68,6 @@ public class ScoreManager : MonoBehaviour
             if (textObj != null)
             {
                 scoreText = textObj.GetComponent<TextMeshProUGUI>();
-                Debug.Log("✅ Gán lại scoreText thành công: " + scoreText.name);
-            }
-            else
-            {
-                Debug.LogWarning("⚠️ Không tìm thấy ScoreText để gán lại vào ScoreManager");
             }
         }
     }
