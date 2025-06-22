@@ -1,14 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class AsteroidSpawn : MonoBehaviour
 {
     public Asteroid asteroidPrefab;
-    public float trajectoryVariance = 15f;
-    public float spawnRate = 2f;
-    public float spawnDistance = 15f;
-    public int spawnAmount = 1;
+    private float spawnRate = 2f;
+    private int spawnAmount = 3;
 
     private void Start()
     {
@@ -17,9 +16,23 @@ public class AsteroidSpawn : MonoBehaviour
 
     private void Spawn()
     {
+        int slots = spawnAmount;
+        float slotHeight = 1f / slots;
+        List<int> usedSlots = new List<int>();
+
         for (int i = 0; i < spawnAmount; i++)
         {
-            float randomY = Random.Range(0f, 1f);
+            int slotIndex;
+            do
+            {
+                slotIndex = Random.Range(0, slots);
+            } while (usedSlots.Contains(slotIndex));
+
+            usedSlots.Add(slotIndex);
+
+            float minY = slotIndex * slotHeight;
+            float maxY = minY + slotHeight;
+            float randomY = Random.Range(minY, maxY);
 
             Vector3 viewportPosition = new Vector3(1f, randomY, Camera.main.nearClipPlane);
             Vector3 spawnPoint = Camera.main.ViewportToWorldPoint(viewportPosition);
@@ -28,10 +41,8 @@ public class AsteroidSpawn : MonoBehaviour
             Quaternion rotation = Quaternion.identity;
 
             Asteroid asteroid = Instantiate(asteroidPrefab, spawnPoint, rotation);
-
             asteroid.size = Random.Range(asteroid.minSize, asteroid.maxSize);
             asteroid.maxLifetime = 10f;
-
             asteroid.SetTrajectory(Vector2.left);
         }
     }
