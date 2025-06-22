@@ -155,6 +155,7 @@ public class PlayerController : MonoBehaviour
 
         Time.timeScale = 0f;
         SceneManager.LoadSceneAsync(2);
+        PlayerPrefs.DeleteAll();
         Destroy(audioObj, overSound.length);
     }
     
