@@ -35,6 +35,7 @@ public class GameOver : MonoBehaviour
             int seconds = Mathf.FloorToInt(TimeManager.Instance.elapsedTime % 60f);
             timeText1.text = $"{minutes:00}:{seconds:00}";
         }
+
         submitButton.onClick.AddListener(SubmitScore);
         leaderboardPanel.SetActive(false);
 
@@ -56,20 +57,22 @@ public class GameOver : MonoBehaviour
     {
         leaderboardPanel.SetActive(true);
 
-        // Clear old entries
         foreach (Transform child in leaderboardContainer)
         {
             Destroy(child.gameObject);
         }
 
         List<ScoreEntry> top = leaderboardManager.GetTopEntries();
-        foreach (var entry in top)
+        for (int i = 0; i < top.Count; i++)
         {
+            var entry = top[i];
             GameObject go = Instantiate(leaderboardEntryPrefab, leaderboardContainer);
             TextMeshProUGUI[] texts = go.GetComponentsInChildren<TextMeshProUGUI>();
-            texts[0].text = entry.name;
-            texts[1].text = entry.score.ToString();
-            texts[2].text = $"{Mathf.FloorToInt(entry.time / 60):00}:{Mathf.FloorToInt(entry.time % 60):00}";
+
+            texts[0].text = (i + 1).ToString(); // Rank
+            texts[1].text = entry.name;
+            texts[2].text = entry.score.ToString();
+            texts[3].text = $"{Mathf.FloorToInt(entry.time / 60):00}:{Mathf.FloorToInt(entry.time % 60):00}";
         }
     }
 
