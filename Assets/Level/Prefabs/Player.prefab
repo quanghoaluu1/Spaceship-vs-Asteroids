@@ -848,6 +848,7 @@ MonoBehaviour:
   pulse2: {fileID: 1114668609383591657}
   heartUI: {fileID: 0}
   overSound: {fileID: 8300000, guid: 8615404e06e7d194ba0049ad07678cb7, type: 3}
+  getHitSound: {fileID: 8300000, guid: 1092bac32984503458c79a333e3e147d, type: 3}
 --- !u!60 &4192105285845358016
 PolygonCollider2D:
   m_ObjectHideFlags: 0

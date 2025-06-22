@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6097927120408206831}
   - component: {fileID: 7564785896506871175}
   - component: {fileID: 8804332038013606162}
-  - component: {fileID: 5463785702229816246}
+  - component: {fileID: -6077597612358001341}
   m_Layer: 12
   m_Name: EnemyBullet5
   m_TagString: BossBullet
@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -1529982592543739754, guid: c391ced7eda354a4786dcdaa388a883a, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -163,7 +163,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &5463785702229816246
+--- !u!114 &-6077597612358001341
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -172,6 +172,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 7105233279982511687}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4303febc3cdf80e46bd9c2acf0a79e87, type: 3}
+  m_Script: {fileID: 11500000, guid: 38b19ddfdba550a4691369d1b4c0e52a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
