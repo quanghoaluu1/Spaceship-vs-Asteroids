@@ -153,8 +153,8 @@ public class InstantLaser : MonoBehaviour
                 EnemyController enemy = hit.collider.GetComponent<EnemyController>();
                 if (enemy != null)
                 {
-                    //enemy.TakeDamage(1);
-                    Destroy(enemy.gameObject);
+                    enemy.TakeDamage(1);
+                    // Destroy(enemy.gameObject);
                 }
             }
             if (hit.collider.CompareTag("Boss"))
@@ -162,8 +162,9 @@ public class InstantLaser : MonoBehaviour
                 BossController boss = hit.collider.GetComponent<BossController>();
                 if (boss != null)
                 {
-                    boss.Die();
-                    Destroy(boss.gameObject);
+                    // boss.Die();
+                    boss.TakeDamage(10);
+                    // Destroy(boss.gameObject);
                 }
             }
         }

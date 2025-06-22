@@ -13,6 +13,8 @@ public class BossController : MonoBehaviour
     private Vector2 verticalDirection = Vector2.up;
     private float verticalPadding = 3f;
 
+    public int maxHealth = 100;
+    private int currentHealth;
     public delegate void BossDefeated();
     public event BossDefeated OnBossDefeated;
 
@@ -20,8 +22,16 @@ public class BossController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         initialPosition = transform.position;
+        currentHealth = maxHealth;
     }
-
+    public void TakeDamage(int amount)
+    {
+        currentHealth -= amount;
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
     void FixedUpdate()
     {
         if (!startVerticalMovement)
