@@ -16,6 +16,7 @@ public class GameOver : MonoBehaviour
     public GameObject leaderboardEntryPrefab;
     public Transform leaderboardContainer;
     public LeaderboardManager leaderboardManager;
+    public Button closeLeaderboardButton;
 
     private int finalScore;
     private float finalTime;
@@ -37,6 +38,9 @@ public class GameOver : MonoBehaviour
         }
 
         submitButton.onClick.AddListener(SubmitScore);
+        
+        closeLeaderboardButton.onClick.AddListener(CloseLeaderboard);
+        
         leaderboardPanel.SetActive(false);
 
     }
@@ -48,9 +52,16 @@ public class GameOver : MonoBehaviour
 
         finalScore = ScoreManager.Instance.score;
         finalTime = TimeManager.Instance.elapsedTime;
+        Debug.Log("Score: " + finalScore.ToString());
+        Debug.Log("Time: " + finalTime.ToString());
 
         leaderboardManager.AddEntry(name, finalScore, finalTime);
         ShowLeaderboard();
+    }
+
+    public void CloseLeaderboard()
+    {
+        leaderboardPanel.SetActive(false);
     }
 
     public void ShowLeaderboard()
@@ -63,6 +74,8 @@ public class GameOver : MonoBehaviour
         }
 
         List<ScoreEntry> top = leaderboardManager.GetTopEntries();
+        Debug.Log("Top entries count: " + top.Count);
+
         for (int i = 0; i < top.Count; i++)
         {
             var entry = top[i];
