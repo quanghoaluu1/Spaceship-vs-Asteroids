@@ -23,13 +23,14 @@ public class TimeManager : MonoBehaviour
         }
         if (PlayerPrefs.GetInt("HasSaved", 0) == 1)
         {
-            Debug.Log("Saved Time: " + PlayerPrefs.GetFloat("SavedTime", 9999));
+            //Debug.Log("Saved Time: " + PlayerPrefs.GetFloat("SavedTime", 9999));
             elapsedTime = PlayerPrefs.GetFloat("SavedTime", 999);
         }
     }
 
-    private void Start()
+    void Start()
     {
+        TryReconnectText();
         UpdateTimeUI();
     }
 
@@ -38,9 +39,27 @@ public class TimeManager : MonoBehaviour
         if (!isGameOver)
         {
             elapsedTime += Time.deltaTime;
+
+            // Gán lại nếu bị null sau khi load scene
+            if (timeText == null)
+                TryReconnectText();
+
             UpdateTimeUI();
         }
     }
+
+    void TryReconnectText()
+    {
+        if (timeText == null)
+        {
+            GameObject textObj = GameObject.Find("TimeText"); // 👈 Đảm bảo UI text đúng tên này
+            if (textObj != null)
+            {
+                timeText = textObj.GetComponent<TextMeshProUGUI>();
+            }
+        }
+    }
+
 
     void UpdateTimeUI()
     {
@@ -56,4 +75,12 @@ public class TimeManager : MonoBehaviour
     {
         isGameOver = true;
     }
+    public void ResetTime()
+    {
+        elapsedTime = 0f;
+        isGameOver = false;
+        UpdateTimeUI(); // update giao diện sau khi reset
+    }
+
+
 }

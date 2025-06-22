@@ -241,4 +241,15 @@ public class InfiniteModeManager : MonoBehaviour
         currentTotalScore = ScoreManager.Instance.score + 1;
         SetMode(GameMode.Asteroid);
     }
+
+    // InfiniteModeManager.cs
+    public void ResetLogic()
+    {
+        currentTotalScore = 0;
+        isBossAlive = false;
+        if (spawnRoutine != null)
+            StopCoroutine(spawnRoutine);
+        SetMode(GameMode.Asteroid);
+    }
+
 }
