@@ -75,6 +75,7 @@ public class InstantLaser : MonoBehaviour
         }
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis
     private void FireLaser()
     {
         Debug.Log("Laser bắn ra");

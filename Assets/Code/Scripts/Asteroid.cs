@@ -15,7 +15,7 @@ public class Asteroid : MonoBehaviour
     public float spawnTime;
     public float asteroidInvincibleTime = 0.1f;
 
-    public AudioClip getHitSound;
+    // public AudioClip getHitSound;
     private AudioSource audioSource;
     private static int life = 3;
     public HeartUIController heartUI;
@@ -111,7 +111,7 @@ public class Asteroid : MonoBehaviour
             }
 
             Debug.Log("Player bị thiên thạch đâm!");
-            PlaySoundAtPosition(getHitSound, transform.position, 5f);
+            // PlaySoundAtPosition(getHitSound, transform.position, 5f);
             playerController.ActivateShield();
 
             int damage = size >= 1f ? 10 : 5;
