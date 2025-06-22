@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     public GameObject pulse2;
     public HeartUIController heartUI;
     public AudioClip overSound;
+    public AudioClip getHitSound;
 
     private SpriteRenderer pulse1Renderer;
     private SpriteRenderer pulse2Renderer;
@@ -101,6 +102,7 @@ public class PlayerController : MonoBehaviour
 
         StartCoroutine(CameraShake.Instance.Shake(0.5f, 0.3f));
         lastHitTime = Time.time;
+        PlaySoundAtPosition(getHitSound, transform.position, 5f);
 
         if (currentHealth <= 0) GameOver();
     }
@@ -157,7 +159,22 @@ public class PlayerController : MonoBehaviour
 
         Time.timeScale = 0f;
         SceneManager.LoadSceneAsync(2);
+        PlayerPrefs.DeleteAll();
         Destroy(audioObj, overSound.length);
+    }
+    
+    private void PlaySoundAtPosition(AudioClip clip, Vector3 position, float volume = 1f)
+    {
+        GameObject tempGO = new GameObject("TempAudio");
+        tempGO.transform.position = position;
+
+        AudioSource aSource = tempGO.AddComponent<AudioSource>();
+        aSource.clip = clip;
+        aSource.volume = volume;
+        aSource.spatialBlend = 0f;
+        aSource.Play();
+
+        Destroy(tempGO, clip.length);
     }
 
     // Buff tăng tốc

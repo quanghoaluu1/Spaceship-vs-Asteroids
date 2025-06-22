@@ -7,6 +7,11 @@ TagManager:
   - LaserShot
   - Asteroid
   - Star
+  - ObjectCleaner
+  - EnemySpaceship
+  - EnemyBullet
+  - BossBullet
+  - Boss
   - PowerUp
   layers:
   - Default
@@ -19,6 +24,10 @@ TagManager:
   - Asteroid
   - LaserShot
   - Player
+  - Enemy
+  - ObjectCleaner
+  - EnemyBullet
+  - Boss
   - PowerUp
   - 
   - 

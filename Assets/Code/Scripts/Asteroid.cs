@@ -15,11 +15,12 @@ public class Asteroid : MonoBehaviour
     public float spawnTime;
     public float asteroidInvincibleTime = 0.1f;
 
-    public AudioClip getHitSound;
+    // public AudioClip getHitSound;
     private AudioSource audioSource;
     private static int life = 3;
     public HeartUIController heartUI;
 
+    public int gameMode = 0; // 0 = vô tận, 1 = Boss
     public int maxHealth = 3;
     private int currentHealth;
 
@@ -55,6 +56,11 @@ public class Asteroid : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        transform.Rotate(0, 0, 360f * Time.deltaTime);
+    }
+
     public void SetTrajectory(Vector2 direction)
     {
         if (ScoreManager.Instance.score >= 80)
@@ -68,12 +74,11 @@ public class Asteroid : MonoBehaviour
 
         _rigitbody.linearDamping = 0f;
         _rigitbody.AddForce(direction * speed);
-        Destroy(gameObject, maxLifetime);
+        //Destroy(gameObject, maxLifetime);
     }
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Va chạm xảy ra với: " + collision.gameObject.name);
 
         if (collision.gameObject.tag == "LaserShot")
         {
@@ -90,6 +95,14 @@ public class Asteroid : MonoBehaviour
             Destroy(gameObject);
         }
 
+        if (collision.gameObject.tag == "EnemyBullet")
+        {
+            CreateSplit();
+            Instantiate(explosionPrefab, collision.transform.position, Quaternion.identity);
+            Destroy(collision.gameObject);
+            Destroy(this.gameObject);
+        }
+
         if (collision.gameObject.CompareTag("Player"))
         {
             PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
@@ -103,7 +116,7 @@ public class Asteroid : MonoBehaviour
             }
 
             Debug.Log("Player bị thiên thạch đâm!");
-            PlaySoundAtPosition(getHitSound, transform.position, 5f);
+            // PlaySoundAtPosition(getHitSound, transform.position, 5f);
             playerController.ActivateShield();
 
             int damage = size >= 1f ? 10 : 5;
