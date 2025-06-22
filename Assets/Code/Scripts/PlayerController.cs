@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     private float baseSpeed;
     private Coroutine speedBoostRoutine;
     public GameObject bombEffectPrefab;
+    private Coroutine shieldRoutine;
 
     public static PlayerController Instance { get; private set; }
 
@@ -94,7 +95,7 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
-        //if (IsInvincible()) return;
+        if (IsInvincible()) return;
 
         currentHealth -= amount;
         currentHealth = Mathf.Max(currentHealth, 0);
@@ -237,11 +238,14 @@ public class PlayerController : MonoBehaviour
     // Kích hoạt khiên
     public void ActivateShieldNoBlink()
     {
-        if (isInvincible) return;
+        if (shieldRoutine != null)
+        {
+            StopCoroutine(shieldRoutine);
+        }
 
         isInvincible = true;
         shield.SetActive(true);
-        StartCoroutine(DisableShieldAfterDelay(invincibleDuration));
+        shieldRoutine = StartCoroutine(DisableShieldAfterDelay(invincibleDuration));
     }
 
     private IEnumerator DisableShieldAfterDelay(float delay)
