@@ -5,15 +5,15 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour
 {
     public GameObject instructionPanel;
-    public Button continueButton;
+    public GameObject continueButton;
     private bool isOpen = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         // Nếu không có dữ liệu lưu thì ẩn nút continue
-        if (PlayerPrefs.GetInt("HasSaved", 0) == 0)
+        if (PlayerPrefs.GetInt("HasSaved", 0) == 1)
         {
-            continueButton.gameObject.SetActive(false);
+            continueButton.SetActive(true);
         }
     }
     public void PlayGame()
