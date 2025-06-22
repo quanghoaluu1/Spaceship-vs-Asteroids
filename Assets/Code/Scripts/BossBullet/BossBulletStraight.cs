@@ -2,7 +2,7 @@
 
 public class BossBulletStraight : MonoBehaviour
 {
-    private Vector2 direction = Vector2.left; // Mặc định bắn trái
+    private Vector2 direction;
     private float speed = 8f;
 
     public void SetDirection(Vector2 dir)
@@ -10,16 +10,11 @@ public class BossBulletStraight : MonoBehaviour
         direction = dir.normalized;
     }
 
-    public void SetSpeed(float newSpeed)
-    {
-        speed = newSpeed;
-    }
-
     void Update()
     {
         transform.position += (Vector3)(direction * speed * Time.deltaTime);
 
-        // Huỷ nếu ra khỏi màn hình
+        // Huỷ nếu ra ngoài màn hình
         Vector2 min = Camera.main.ViewportToWorldPoint(Vector2.zero);
         Vector2 max = Camera.main.ViewportToWorldPoint(Vector2.one);
         if (transform.position.x < min.x || transform.position.x > max.x ||
@@ -28,20 +23,28 @@ public class BossBulletStraight : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-    void OnCollisionEnter2D(Collision2D collision)
+    public void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            PlayerController player = collision.gameObject.GetComponent<PlayerController>();
-            if (player == null) return;
+            PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
+            if (playerController == null) return;
 
-            if (!player.IsInvincible())
+
+            if (playerController.IsInvincible())
             {
-                player.ActivateShield();
+                //Debug.Log("Player đang bất tử, không mất máu. Còn " + playerController.IsInvincibleTime() + " giây.");
+                Destroy(this.gameObject);
+                return;
             }
 
-            Destroy(gameObject);
+            //PlaySoundAtPosition(getHitSound, transform.position, 5f);
+
+            //Nếu đến đây là chắc chắn chưa bất tử → xử lý mất máu và kích hoạt khiên
+            playerController.ActivateShield(); // Bật trạng thái bất tử + khiên + nhấp nháy
+
+            playerController.TakeDamage(20);
+            Destroy(this.gameObject);
         }
     }
 }
