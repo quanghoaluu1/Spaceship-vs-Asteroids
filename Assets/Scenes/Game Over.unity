@@ -246,14 +246,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreText: {fileID: 1818001389}
-  timeText1: {fileID: 867310143}
+  timeText: {fileID: 867310143}
   nameInput: {fileID: 226057205}
   submitButton: {fileID: 754441118}
   leaderboardPanel: {fileID: 330961862}
   leaderboardEntryPrefab: {fileID: 1016732248425819345, guid: dd335f62ae5bb1041857b10c41810b37, type: 3}
   leaderboardContainer: {fileID: 1867858115}
   leaderboardManager: {fileID: 1253274793}
-  closeLeaderboardButton: {fileID: 0}
+  closeLeaderboardButton: {fileID: 570900600}
 --- !u!1 &205497298
 GameObject:
   m_ObjectHideFlags: 0
@@ -1590,7 +1590,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreText: {fileID: 1818001389}
-  timeText1: {fileID: 205497300}
+  timeText: {fileID: 867310143}
   nameInput: {fileID: 226057205}
   submitButton: {fileID: 754441118}
   leaderboardPanel: {fileID: 330961862}

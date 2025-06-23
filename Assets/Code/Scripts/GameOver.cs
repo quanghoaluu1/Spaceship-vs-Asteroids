@@ -7,8 +7,8 @@ using System.Collections.Generic;
 
 public class GameOver : MonoBehaviour
 {
-    public TextMeshProUGUI scoreText;
-    public TextMeshProUGUI timeText1;
+    public TextMeshProUGUI scoreTextValue;
+    public TextMeshProUGUI timeTextValue;
 
     public TMP_InputField nameInput;
     public Button submitButton;
@@ -31,14 +31,14 @@ public class GameOver : MonoBehaviour
         if (ScoreManager.Instance != null)
         {
             Debug.Log("ScoreManager found, score = " + ScoreManager.Instance.score);
-            scoreText.text = ScoreManager.Instance.score.ToString();
+            scoreTextValue.text = ScoreManager.Instance.score.ToString();
         }
 
         if (TimeManager.Instance != null)
         {
             int minutes = Mathf.FloorToInt(TimeManager.Instance.elapsedTime / 60f);
             int seconds = Mathf.FloorToInt(TimeManager.Instance.elapsedTime % 60f);
-            timeText1.text = $"{minutes:00}:{seconds:00}";
+            timeTextValue.text = $"{minutes:00}:{seconds:00}";
         }
 
         submitButton.onClick.RemoveAllListeners();
