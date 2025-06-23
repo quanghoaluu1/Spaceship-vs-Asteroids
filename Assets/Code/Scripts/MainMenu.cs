@@ -6,6 +6,7 @@ public class MainMenu : MonoBehaviour
 {
     public GameObject instructionPanel;
     public GameObject continueButton;
+    public GameObject optionsPanel;
     private bool isOpen = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -34,6 +35,12 @@ public class MainMenu : MonoBehaviour
         instructionPanel.SetActive(true);
     }
 
+    public void OpenOption()
+    {
+        isOpen = !isOpen;
+        optionsPanel.SetActive(true);
+    }
+
     public void GoBackToMainMenu()
     {
         Time.timeScale = 1f;
@@ -50,5 +57,11 @@ public class MainMenu : MonoBehaviour
         isOpen = !isOpen;
         instructionPanel.SetActive(false);
     }
- 
+
+    public void QuitOptions()
+    {
+        isOpen = !isOpen;
+        optionsPanel.SetActive(false);
+    }
+
 }

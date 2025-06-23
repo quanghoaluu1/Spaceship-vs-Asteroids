@@ -253,7 +253,7 @@ MonoBehaviour:
   leaderboardEntryPrefab: {fileID: 1016732248425819345, guid: dd335f62ae5bb1041857b10c41810b37, type: 3}
   leaderboardContainer: {fileID: 1867858115}
   leaderboardManager: {fileID: 1253274793}
-  closeLeaderboardButton: {fileID: 0}
+  closeLeaderboardButton: {fileID: 570900600}
 --- !u!1 &205497298
 GameObject:
   m_ObjectHideFlags: 0
