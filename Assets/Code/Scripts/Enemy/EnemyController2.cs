@@ -76,7 +76,7 @@ public class BossController : MonoBehaviour
                 return;
             }
 
-            //playerController.ActivateShield(); // Bật trạng thái bất tử + khiên + nhấp nháy
+            playerController.ActivateShield(); // Bật trạng thái bất tử + khiên + nhấp nháy
 
             playerController.TakeDamage(20);
 
