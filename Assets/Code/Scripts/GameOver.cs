@@ -21,6 +21,14 @@ public class GameOver : MonoBehaviour
     private int finalScore;
     private float finalTime;
 
+    public static GameOver Instance;
+
+    void Awake()
+    {
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
     void Start()
     {
 
@@ -30,25 +38,26 @@ public class GameOver : MonoBehaviour
             scoreText.text = ScoreManager.Instance.score.ToString();
         }
 
-        //if (TimeManager.Instance != null)
-        //{
-        //    int minutes = Mathf.FloorToInt(TimeManager.Instance.elapsedTime / 60f);
-        //    int seconds = Mathf.FloorToInt(TimeManager.Instance.elapsedTime % 60f);
-        //    timeText1.text = $"{minutes:00}:{seconds:00}";
-        //}
+        if (TimeManager.Instance != null)
+        {
+            int minutes = Mathf.FloorToInt(TimeManager.Instance.elapsedTime / 60f);
+            int seconds = Mathf.FloorToInt(TimeManager.Instance.elapsedTime % 60f);
+            timeText1.text = $"{minutes:00}:{seconds:00}";
+        }
 
         submitButton.onClick.AddListener(SubmitScore);
-        
-        closeLeaderboardButton.onClick.AddListener(CloseLeaderboard);
-        
+
         leaderboardPanel.SetActive(false);
 
     }
 
     public void SubmitScore()
     {
+        Debug.Log("SubmitScore() called");
         string name = nameInput.text;
         if (string.IsNullOrEmpty(name)) return;
+
+        submitButton.interactable = false;
 
         finalScore = ScoreManager.Instance.score;
         finalTime = TimeManager.Instance.elapsedTime;
@@ -67,6 +76,12 @@ public class GameOver : MonoBehaviour
     public void ShowLeaderboard()
     {
         leaderboardPanel.SetActive(true);
+
+        if (closeLeaderboardButton != null)
+        {
+            closeLeaderboardButton.onClick.RemoveAllListeners();
+            closeLeaderboardButton.onClick.AddListener(CloseLeaderboard);
+        }
 
         foreach (Transform child in leaderboardContainer)
         {

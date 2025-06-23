@@ -1564,6 +1564,7 @@ GameObject:
   - component: {fileID: 774953636}
   - component: {fileID: 774953635}
   - component: {fileID: 774953639}
+  - component: {fileID: 774953640}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1677,7 +1678,7 @@ AudioSource:
   m_GameObject: {fileID: 774953634}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 960f48bfe5f0c8c42854ac6b49457e19, type: 2}
   m_audioClip: {fileID: 8300000, guid: 5bb9d55a98e5f8947888fa209fc25ef8, type: 3}
   m_Resource: {fileID: 8300000, guid: 5bb9d55a98e5f8947888fa209fc25ef8, type: 3}
   m_PlayOnAwake: 1
@@ -1765,6 +1766,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &774953640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 774953634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82f1139be3de4454cbdfdfc845733897, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volumeSlider: {fileID: 1617091201}
+  muteButtonImage: {fileID: 1478290050}
+  unmutedSprite: {fileID: -8229598120360318422, guid: 2ae9696fab9251e4195accefb32b6114, type: 3}
+  mutedSprite: {fileID: -5499041813373079086, guid: eac40e955c89b9f46b61178daaf5a589, type: 3}
+  mainMixer: {fileID: 24100000, guid: 960f48bfe5f0c8c42854ac6b49457e19, type: 2}
 --- !u!1 &795935408
 GameObject:
   m_ObjectHideFlags: 0
