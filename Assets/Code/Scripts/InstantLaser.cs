@@ -145,7 +145,7 @@ public class InstantLaser : MonoBehaviour
                 Boss3 boss = hit.collider.GetComponent<Boss3>();
                 if (boss != null)
                 {
-                    boss.TakeDamage(2);
+                    boss.TakeDamage(6);
                 }
             }
         }
