@@ -20,6 +20,7 @@ public class GameOver : MonoBehaviour
 
     private int finalScore;
     private float finalTime;
+    private bool scoreSubmitted = false;
 
     public static GameOver Instance;
 
@@ -47,12 +48,21 @@ public class GameOver : MonoBehaviour
 
         submitButton.onClick.AddListener(SubmitScore);
 
+        if (closeLeaderboardButton != null)
+        {
+            closeLeaderboardButton.onClick.RemoveAllListeners();
+            closeLeaderboardButton.onClick.AddListener(CloseLeaderboard);
+        }
+
         leaderboardPanel.SetActive(false);
 
     }
 
     public void SubmitScore()
     {
+        if (scoreSubmitted) return;
+        scoreSubmitted = true;
+
         Debug.Log("SubmitScore() called");
         string name = nameInput.text;
         if (string.IsNullOrEmpty(name)) return;
@@ -76,12 +86,6 @@ public class GameOver : MonoBehaviour
     public void ShowLeaderboard()
     {
         leaderboardPanel.SetActive(true);
-
-        if (closeLeaderboardButton != null)
-        {
-            closeLeaderboardButton.onClick.RemoveAllListeners();
-            closeLeaderboardButton.onClick.AddListener(CloseLeaderboard);
-        }
 
         foreach (Transform child in leaderboardContainer)
         {
