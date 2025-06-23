@@ -24,11 +24,6 @@ public class GameOver : MonoBehaviour
 
     public static GameOver Instance;
 
-    void Awake()
-    {
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-    }
 
     void Start()
     {
@@ -46,6 +41,7 @@ public class GameOver : MonoBehaviour
             timeText1.text = $"{minutes:00}:{seconds:00}";
         }
 
+        submitButton.onClick.RemoveAllListeners();
         submitButton.onClick.AddListener(SubmitScore);
 
         if (closeLeaderboardButton != null)
